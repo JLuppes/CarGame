@@ -19,3 +19,7 @@ You can download the repo and modify the files to make the game your own!
 You can play the [finished game here!](https://jluppes.github.io/CarGame/Finish/index.html)
 
 ![The Car Game In Action](./game_screenshot.png)
+
+## Powered Up
+
+You can play my [Powered Up version](https://jluppes.github.io/CarGame/PoweredUp/index.html) of the game!
