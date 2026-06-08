@@ -7,3 +7,15 @@ The folder called `Start` has a basic HTML file called `index.html` that will se
 The folder called `Finish` has a completed version of the game.
 
 You can download the repo and modify the files to make the game your own!
+
+## The Slides
+
+[Day 1 Slides](https://jluppes.github.io/CarGame/Slides/docs/CarGameSlides/CarGame.html)
+
+[Day 2 Slides](https://jluppes.github.io/CarGame/Slides/docs/CarGameSlides/CarGameDay2.html)
+
+## The Game
+
+You can play the [finished game here!](https://jluppes.github.io/CarGame/Finish/index.html)
+
+![The Car Game In Action](./game_screenshot.png)
