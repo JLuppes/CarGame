@@ -1,0 +1,60 @@
+# These are settings for the whole project
+project:
+  title: "Dunwoody-Slides"
+  output-dir: docs
+
+## Settings for executable code (Usually R, Python, or JS)
+execute:
+  cache: true
+  freeze: auto
+
+## Theme settings (can be overridden by _metadata.yml files)
+theme: [./Themes/dunwoody.scss]
+code-overflow: wrap
+code-annotations: below
+code-block-border-left: false
+syntax-highlighting: monokai # Other options: https://quarto.org/docs/output-formats/html-code.html#highlighting
+code-line-numbers: false
+footer: "&copy; <span id=\"copyright\"><script>document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))</script></span> Dunwoody College of Technology" # Keeps the year in footer updated
+
+## Output Formats
+format:
+  ## Generate an HTML slideshow
+  revealjs:
+    ## Include slide numbers in presentations
+    slide-number: true
+
+    ## Default max-height for code blocks
+    code-block-height: 450px
+
+    ## Embeds images into the HTML file. Slower, but nicer output
+    embed-resources: true
+    # embed-resources: false # during testing, quicker
+
+    ## Produces a 'Speaker' version of the slides
+    multiplex: true
+
+    ## Presentation Dimensions
+    height: 100%
+    width: 960 # Optimized for side-by-side presentation at 1080p
+    # width: 1920 # If you are going to present the slides full-screen
+
+    ## Margin adds some space around the edges. 0.1 is probably the most you'd want.
+    margin: 0.01
+
+    ## Center vertically
+    center: false
+
+    ## Vertical overflow is scrollable
+    scrollable: true
+
+  ## Create a pdf file (comment this whole section if not needed)
+  pdf:
+    ## Table of contents
+    toc: true
+
+    ## Number major sections
+    number-sections: false
+
+    ## Highlight links with theme colors
+    colorlinks: true

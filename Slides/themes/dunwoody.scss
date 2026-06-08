@@ -1,0 +1,417 @@
+/*-- scss:defaults --*/
+
+/* Fonts */
+
+// Header Font
+@import url("https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap");
+$presentation-heading-font: "Bitter", serif;
+
+// Body Font
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+$font-family-sans-serif: "Open Sans", sans-serif;
+
+// Code Font
+@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap");
+$font-family-monospace: "Source Code Pro", monospace;
+
+$presentation-font-size-root: 36px;
+$presentation-h1-font-size: 2.2em;
+$presentation-h2-font-size: 1.6em;
+$presentation-h3-font-size: 1.35em;
+$code-block-font-size: 0.75em;
+
+/* Theme Color Definitions */
+$theme-white: #ffffff;
+$theme-dunwoody-maroon: #ac182e;
+$theme-dunwoody-dark-maroon: #891325;
+$theme-dunwoody-dark-gray: #a2a9ac;
+$theme-dunwoody-dark-black: rgb(56, 56, 56);
+
+/* Color Applications */
+$body-bg: $theme-white;
+$body-color: $theme-dunwoody-dark-black;
+$link-color: $theme-dunwoody-dark-maroon;
+$presentation-heading-color: $theme-dunwoody-maroon;
+$code-color: $theme-dunwoody-maroon;
+
+/* Left side bar */
+$bar-width: 45px;
+$bar-color: $theme-dunwoody-maroon;
+
+/* Footer */
+$footer-height: 40px;
+
+/* Code Block Sizes */
+$code-heights: (
+  "max-code": 120vh,
+  "tall-code": 85vh,
+  "med-code": 60vh,
+  "short-code": 35vh,
+  "micro-code": 20vh,
+);
+
+/*-- scss:rules --*/
+/* =========================================
+   1. MAIN LAYOUT & LEFT-SIDE BAR
+   ========================================= */
+
+body .reveal {
+  position: absolute !important;
+  width: calc(100% - #{$bar-width}) !important;
+  left: $bar-width !important;
+  overflow: visible !important;
+  height: calc(100% - #{$footer-height}) !important;
+  top: 0 !important;
+
+  // Typography
+  font-size: $presentation-font-size-root !important;
+  h1 {
+    text-align: center !important;
+    font-size: $presentation-h1-font-size !important;
+  }
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    text-align: left !important;
+  }
+  h2 {
+    font-size: $presentation-h2-font-size !important;
+    padding-bottom: 0.2em;
+  }
+  h3,
+  h4,
+  h5,
+  h6 {
+    padding-bottom: 0.1em;
+  }
+  h3 {
+    font-size: $presentation-h3-font-size !important;
+  }
+}
+
+.reveal::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -#{$bar-width} !important;
+  width: $bar-width;
+  height: 100vh;
+  background-color: $bar-color;
+  z-index: 50;
+  pointer-events: none;
+}
+
+// Add Dunwoody logo icon
+.reveal .slide-menu-button .fa-bars::before {
+  content: "" !important;
+  display: block !important;
+  height: 4rem !important;
+  width: 4rem !important;
+  background-size: 4rem 4rem !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50px' height='50px' viewBox='0 0 1511 1511'%3E %3Cpath id='Inner' fill='white' stroke='white' stroke-width='1' d='M 487.90,388.04 C 487.90,388.04 490.73,334.30 501.94,325.04 513.15,315.79 529.96,309.21 583.81,305.06 637.66,300.92 730.74,303.11 760.22,308.72 789.71,314.32 911.54,342.59 973.18,394.98 1034.83,447.36 1088.96,513.68 1110.94,600.79 1132.91,687.91 1148.33,832.97 1100.30,963.79 1052.27,1094.62 962.53,1207.74 736.91,1225.44 511.28,1243.13 496.12,1134.43 490.43,1079.45 484.74,1024.46 487.90,388.04 487.90,388.04 Z M 364.52,455.41 C 365.87,455.57 365.11,1127.96 363.37,1127.76 365.23,1133.80 356.87,1184.46 353.19,1185.78 350.55,1190.69 336.92,1206.71 328.76,1208.17 325.59,1214.74 293.66,1221.86 280.20,1223.07 280.61,1224.58 239.22,1227.72 239.23,1229.05 232.90,1230.03 233.34,1265.26 241.77,1263.91 241.77,1263.91 277.47,1262.86 277.47,1262.86 277.47,1262.86 445.81,1259.06 445.81,1259.06 445.81,1259.06 658.54,1277.38 672.79,1271.28 687.04,1265.17 864.65,1284.80 1012.24,1202.36 1159.82,1119.91 1267.20,1007.66 1281.45,761.34 1295.70,515.02 1126.74,244.28 663.63,258.53 629.40,258.87 598.19,257.46 569.40,257.82 207.69,262.36 256.98,270.03 256.98,270.03 249.67,271.33 250.59,308.72 259.59,307.12 259.59,307.12 327.17,307.90 342.27,331.07 369.04,355.52 366.63,446.02 364.52,455.41 Z' /%3E  %3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  transform: scale(0.75) translateX(-10px) !important;
+  transform-origin: bottom left !important;
+}
+
+/* =========================================
+   2. UI ELEMENTS
+   ========================================= */
+.reveal .footer {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: absolute !important;
+  bottom: -#{$footer-height} !important;
+  height: $footer-height !important;
+  width: 100% !important;
+  z-index: 100 !important;
+  padding-left: 0 !important;
+  p {
+    display: inline !important;
+    margin: 0 !important;
+  }
+}
+
+#title-slide ~ .footer {
+  display: flex !important;
+}
+
+.reveal .progress {
+  position: absolute !important;
+  bottom: -#{$footer-height} !important;
+  left: 0 !important;
+  width: 100% !important;
+  z-index: 102 !important;
+}
+
+.reveal .slide-number {
+  position: absolute !important;
+  bottom: calc(-#{$footer-height} + 5px) !important;
+  right: 15px !important;
+  z-index: 102 !important;
+}
+
+.reveal .slide-menu-button {
+  position: absolute !important;
+  transform: none !important;
+  width: 35px !important;
+  height: 35px !important;
+  left: calc(-#{$bar-width} + 10px) !important;
+
+  bottom: calc(-#{$footer-height} + 10px) !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 20px !important;
+
+  z-index: 101 !important;
+  padding: 10px !important;
+  background-clip: content-box !important;
+}
+
+.reveal .slide-menu-button a {
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* =========================================
+   3. CODE BLOCKS & SYNTAX HIGHLIGHTING
+   ========================================= */
+
+// Force 100% width so horizontal centering never shifts dynamically.
+.reveal div.sourceCode {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 0 1em 0 !important;
+  box-sizing: border-box !important;
+}
+
+// Code Boxes
+.reveal pre,
+.reveal pre.sourceCode,
+.reveal pre.quarto {
+  display: block !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  font-size: $code-block-font-size !important;
+  margin-left: 0 !important;
+  left: auto !important;
+
+  // Make the outer box the strict anchor for Reveal's absolute clones
+  position: relative !important;
+}
+
+// Reset the inner code wrapper
+.reveal pre code {
+  display: block !important;
+  width: 100% !important;
+  white-space: normal !important;
+  overflow-x: hidden !important;
+  padding: 0.5em 1em !important;
+  box-sizing: border-box !important;
+}
+
+// Protect Quarto's generated wrapper if it injects one
+.reveal pre .code-wrapper {
+  width: 100% !important;
+  height: 100% !important;
+  box-sizing: border-box !important;
+}
+
+// Fix code block jitter with global line-lock
+.reveal pre code > span {
+  display: block !important;
+  width: 100% !important;
+  position: relative !important;
+  box-sizing: border-box !important;
+  white-space: pre-wrap !important;
+  word-break: break-word !important;
+  line-height: 1.2 !important;
+  min-height: 1.2em !important;
+  font-weight: normal !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  text-indent: 0 !important;
+}
+
+// Force highlight classes to obey the locked geometry
+.reveal pre code > span.highlight-line,
+.reveal pre code > span.code-line-highlight,
+.reveal pre code > span.current-fragment {
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-weight: normal !important;
+  box-shadow: none !important;
+}
+
+// Hide the empty line number anchor completely
+.reveal pre:not(.numberSource):not(.numberLines) code > span > a:first-child {
+  display: none !important;
+}
+
+.reveal pre.numberSource code,
+.reveal pre.numberLines code {
+  padding: 0.5em 1em 0.5em 0.8em !important;
+}
+
+// Hanging Indents
+.reveal pre.numberSource code > span,
+.reveal pre.numberLines code > span {
+  display: block !important;
+
+  padding-left: 3.6em !important;
+
+  text-indent: -3.6em !important;
+}
+
+// Line Number Anchors
+.reveal pre.numberSource code > span > a:first-child,
+.reveal pre.numberLines code > span > a:first-child {
+  position: static !important;
+
+  // Match the width
+  width: 3.6em !important;
+  min-width: 0 !important;
+  max-width: none !important;
+
+  display: inline-block !important;
+
+  padding: 0 !important;
+  padding-right: 0.5em !important;
+  margin: 0 !important;
+
+  text-align: right !important;
+  color: rgba(150, 150, 150, 0.8) !important;
+  font-weight: normal !important;
+  box-sizing: border-box !important;
+  text-decoration: none !important;
+  border: none !important;
+
+  text-indent: 0 !important;
+}
+
+.reveal pre.numberSource code > span > a:first-child::before,
+.reveal pre.numberLines code > span > a:first-child::before {
+  position: static !important;
+  width: auto !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: inline !important;
+  text-indent: 0 !important;
+}
+
+// Loop through the code size map and generate rules for each
+@each $name, $height in $code-heights {
+  .reveal div.sourceCode.#{$name},
+  .reveal pre.#{$name},
+  .reveal .code-wrapper.#{$name},
+  .reveal .#{$name} .code-wrapper,
+  .reveal .#{$name} pre {
+    max-height: $height !important;
+    overflow-y: auto !important;
+    scrollbar-width: thin;
+  }
+  .reveal .#{$name} code,
+  .reveal pre.#{$name} code {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+}
+
+/* =========================================
+   4. IMAGES & CAPTIONS
+   ========================================= */
+
+/* --- A. STRETCHED FIGURES (WITH CAPTIONS) --- */
+.reveal .slides section figure.stretch,
+.reveal .slides section figure.r-stretch {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 100% !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+}
+
+.reveal .slides section figure.stretch img,
+.reveal .slides section figure.r-stretch img {
+  height: auto !important;
+  max-height: calc(100% - 2.5em) !important;
+  max-width: 100% !important;
+  object-fit: contain !important;
+  margin: 0 !important;
+}
+
+.reveal .slides section figure.stretch figcaption,
+.reveal .slides section figure.r-stretch figcaption {
+  flex-shrink: 0 !important;
+  margin-top: 0.5em !important;
+  font-size: 0.8em !important;
+  text-align: center !important;
+}
+
+/* --- B. BARE STRETCHED IMAGES (NO CAPTIONS) --- */
+.reveal .slides section img.stretch,
+.reveal .slides section img.r-stretch {
+  height: auto !important;
+  max-height: 70vh !important;
+  max-width: 100% !important;
+  object-fit: contain !important;
+  display: block !important;
+  margin: 0 auto !important;
+}
+
+/* --- C. STANDARD & MANUALLY SIZED IMAGES --- */
+.reveal
+  .slides
+  section
+  img:not([height]):not([style*="height"]):not(.stretch):not(.r-stretch) {
+  height: auto !important;
+}
+
+.reveal
+  .slides
+  section
+  img:not([width]):not([style*="width"]):not(.stretch):not(.r-stretch) {
+  width: auto !important;
+}
+
+.reveal .slides section figure:not(.stretch):not(.r-stretch) img,
+.reveal .slides section img:not(.stretch):not(.r-stretch) {
+  display: inline-block !important;
+  max-height: 60vh !important;
+  max-width: 100% !important;
+  object-fit: contain !important;
+}
+
+/* =========================================
+   5. TITLE SLIDE STYLING
+   ========================================= */
+
+#title-slide h1,
+#title-slide h2,
+#title-slide h3,
+#title-slide p {
+  text-shadow: 0px 4px 15px rgba(179, 179, 179, 0.8) !important;
+
+  // Optional: Force text to white if your banner is dark
+  // color: white !important;
+}

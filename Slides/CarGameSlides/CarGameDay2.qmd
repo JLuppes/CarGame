@@ -1,0 +1,264 @@
+---
+title: Car Game Day 2
+---
+
+# Recap
+
+## Our Project So Far
+
+Now we have a fully working game!
+
+![](./images/CompletedGame.png)
+
+. . .
+
+<br><br>
+
+### What's your high score so far (no modifications)?
+
+---
+
+## What's Happening Under the Hood
+
+An **HTML document**, containing embedded **JavaScript code** and **CSS styling** is rendered by a **web browser** to provide an interactive experience.
+
+::::: {.fragment}
+
+### HTML
+**H**yper-**T**ext **M**arkup **L**anguage
+Provides the **structure** of the page and most of the **content**.
+
+::: {.callout-note .fragment}
+
+Not actually a programming language!
+
+:::
+
+:::::
+
+::::: {.fragment}
+
+### CSS
+
+Cascading Style Sheet
+Provides rules to tell the browser how targets should be displayed.
+
+::: {.callout-note .fragment}
+
+Not in its own sheet!
+
+:::
+
+:::::
+
+::::: {.fragment}
+
+### JavaScript
+
+Scripting/Coding language executed in the brower, can affect and alter the page's DOM (Document Object Model).
+
+::: {.callout-note .fragment}
+
+Not related to Java!
+
+:::
+
+:::::
+
+# What Now?
+
+## Make it Your Own
+
+All of the code that you pasted in to the `HTML` file - you can modify that!
+
+You can change small things like the speed, starting score, or color values.
+
+Or you can change the functionality, game-over conditions, controls - anything you want!
+
+---
+
+## Today - Two Paths
+
+We are going to focus on two tracks today.
+
+
+::: {.fragment}
+
+### 1. Style
+
+Update the game to look better/different/unique.
+
+You can change the colors, change the images, add backgrounds, gradients, animations, etc.
+
+The winner will be voted on, and should be considered based on the best-looking changes, as well as most unique and most ambitious attempts.
+
+:::
+
+
+::: {.fragment}
+
+### 2. Functionality (Features)
+
+Change the functionality of the game to add some kind of new feature.
+
+You could change the number of enemies, change how many times you need to crash before losing, or change the system for scoring.
+
+Or, just see how high you can get the score!
+
+The winner will be voted on, and should be considered based on the most fun improvement, as well as the most unique and ambitious attempts.
+
+:::
+
+# Style Examples
+
+## Change the Car Image
+
+Find or make another picture to use for the cars!
+
+---
+
+## Find an Existing Image
+
+
+::: {.callout-important}
+
+Dificulty: Easy
+
+:::
+
+
+Search for an image in a similar orientation to our example.
+
+Try to narrow down your search with relevant keywords, like "top-down" and "transparent".
+
+Save an image as a file in your project folder with a new name - maybe `car3.png` to start.
+
+#### Now Make it Work!
+
+What do you have to change in the `.html` file to get the image to appear?
+
+What do you need to do in the actual game to get the new image to update?
+
+What do you need to change about the image file for it to work better?
+
+What can you change in the style section of the `.html` file to adjust the look?
+
+---
+
+## Make Your Own Car!
+
+
+::: {.callout-important}
+
+Dificulty: Medium
+
+:::
+
+Open up `Paint` and make a new file with similar dimensions (`77x154`) and draw up a new car look.
+
+### Add Transparency
+
+Save your car image as a `.png` file.
+
+Now, select and delete or erase the background.
+
+Remember, the cars have random colors by default, which will show through anywhere there is no background.
+
+Follow the steps from the last section to add your image to the game!
+
+---
+
+## Add Some Backgrounds
+
+
+::: {.callout-important}
+
+Dificulty: Dificult
+
+:::
+
+
+Find or make a background image for part of the game.
+
+Consider:
+
+- The road
+- The area outside of the road (grass? desert? city?)
+- Road lines
+- High Score display
+- Start Button display
+
+Save the images into the project folder, and then you will need to figure out how to get them into the game using our CSS code.
+
+### Hint
+
+```css
+background-image: url(grass.png);
+```
+
+---
+
+## Make Those Backgrounds Scroll
+
+
+::: {.callout-important}
+
+Dificulty: Expert!!!
+
+:::
+
+Static backgrounds improve the look a lot, but for a racing game, it would be a lot better if they would scroll.
+
+This will require some serious CSS trickery!
+
+Consider checking out some CSS tricks:
+
+https://css-tricks.com/books/fundamental-css-tactics/infinite-scrolling-background-image/
+
+Note: You will have to modify the instructions on that page quite a bit to make it work!
+
+---
+
+## Scrolling Background Spoiler
+
+```{.css .tall-code code-line-numbers="|0-4|6-7,13-14|17-19|21-28"  }
+body{                                           /* <1> */
+    background: url(grass.png) repeat-y;        /* <1> */
+    animation: slide 6.5s linear infinite;      /* <1> */
+}                                               /* <1> */
+
+.gameArea {                                     /* <2> */
+    /* background-color: black; */
+    width: 400px;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    margin: auto;
+    background: url("road.png") repeat-y;       /* <2> */
+    animation: slide 1.5s linear infinite;      /* <2> */
+}
+
+.pause{                                         /* <3> */
+    animation-play-state: paused;               /* <3> */
+}                                               /* <3> */
+
+@keyframes slide {                              /* <4> */
+    0% {                                        /* <4> */
+        background-position: 0 0;               /* <4> */
+    }                                           /* <4> */
+    100% {                                      /* <4> */
+        background-position: 0 1024px;          /* <4> */
+    }                                           /* <4> */
+}                                               /* <4> */
+```
+1. Add background and animation to body
+2. Add background and animation to game area
+3. Add pause class (to pause animations)
+4. Add animation definition
+
+
+
+
+---
+
+## Functionality Examples

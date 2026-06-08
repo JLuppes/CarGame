@@ -1,0 +1,23 @@
+## These are settings for just the Slides directory
+author:
+  - name:
+      given: Joshua
+      family: Luppes
+      literal: Joshua Luppes
+    url: https://github.com/jluppes
+    email: jluppes@dunwoody.edu
+    affiliations:
+    - name: Dunwoody College of Technology
+      department: Computer Technology
+      group: Web Programming and Database Development
+      url: https://dunwoody.edu
+title-slide-attributes:
+  data-background-image: images/CarBackground.png
+  data-background-size: cover
+  data-background-position: center
+  data-background-opacity: "0.8"
+fig-cap-location: top
+format:
+  revealjs:
+    width: 130%
+    height: 1200
