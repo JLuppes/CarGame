@@ -90,8 +90,6 @@ Update the game to look better/different/unique.
 
 You can change the colors, change the images, add backgrounds, gradients, animations, etc.
 
-The winner will be voted on, and should be considered based on the best-looking changes, as well as most unique and most ambitious attempts.
-
 :::
 
 
@@ -105,24 +103,53 @@ You could change the number of enemies, change how many times you need to crash 
 
 Or, just see how high you can get the score!
 
-The winner will be voted on, and should be considered based on the most fun improvement, as well as the most unique and ambitious attempts.
-
 :::
 
 # Style Examples
+
+## Change Existing Colors
+
+::: {.callout-important}
+
+difficulty: Super Easy
+
+:::
+
+```{.css}
+.score {
+    background-color: black;
+    height: 70px;
+    text-align: center;
+    color: white;
+    font-size: 1.5em;
+    font-family: fantasy;
+}
+```
+
+
+```{.css code-line-numbers="|2,5"}
+.score {
+    background-color: green;
+    height: 70px;
+    text-align: center;
+    color: red;
+    font-size: 1.5em;
+    font-family: fantasy;
+}
+```
+
+---
 
 ## Change the Car Image
 
 Find or make another picture to use for the cars!
 
----
-
-## Find an Existing Image
+### Option 1: Find an Existing Image
 
 
 ::: {.callout-important}
 
-Dificulty: Easy
+difficulty: Easy
 
 :::
 
@@ -145,12 +172,17 @@ What can you change in the style section of the `.html` file to adjust the look?
 
 ---
 
-## Make Your Own Car!
+## Change the Car Image
+
+Find or make another picture to use for the cars!
+
+
+### Option 2: Make Your Own Car!
 
 
 ::: {.callout-important}
 
-Dificulty: Medium
+difficulty: Medium
 
 :::
 
@@ -173,7 +205,7 @@ Follow the steps from the last section to add your image to the game!
 
 ::: {.callout-important}
 
-Dificulty: Dificult
+difficulty: difficult
 
 :::
 
@@ -203,7 +235,7 @@ background-image: url(grass.png);
 
 ::: {.callout-important}
 
-Dificulty: Expert!!!
+difficulty: Expert!!!
 
 :::
 
@@ -219,9 +251,9 @@ Note: You will have to modify the instructions on that page quite a bit to make 
 
 ---
 
-## Scrolling Background Spoiler
+## Scrolling Background Spoiler (1/2)
 
-```{.css .tall-code code-line-numbers="|0-4|6-7,13-14|17-19|21-28"  }
+```{.css .tall-code code-line-numbers="|0-4|6-7,13-14|17-19|21-28" code-fold="true" }
 body{                                           /* <1> */
     background: url(grass.png) repeat-y;        /* <1> */
     animation: slide 6.5s linear infinite;      /* <1> */
@@ -257,8 +289,235 @@ body{                                           /* <1> */
 4. Add animation definition
 
 
+---
+
+## Scrolling Background (2/2)
+
+Don't forget to add the scripting!
+
+```{.html}
+<div class="gameArea pause">
+```
+
+
+```{.js code-line-numbers="|5-6"}
+function start() {
+    startScreen.classList.add("hide");
+    //gameArea.classList.remove("hide");
+    gameArea.innerHTML = "";
+    body.classList.remove("pause")
+    gameArea.classList.remove("pause")
+    player.start = true;
+    player.score = 0;
+```
+
+```{.js code-line-numbers="|5-6"}
+function endGame() {
+    player.start = false;
+    score.innerHTML = "Game Over<br>Score was " + player.score;
+    startScreen.classList.remove("hide");
+    body.classList.add("pause")
+    gameArea.classList.add("pause")
+}
+```
+
+# Functionality Examples
+
+## Change the Numbers
+
+
+::: {.callout-important}
+
+difficulty: Easy
+
+:::
+
+Update the starting score, speed, or scoring increment.
+
+Speed and starting score:
+```{.js code-line-numbers="|2-3"}
+let player = {
+    speed: 10,
+    score: 0,
+};
+```
+
+Update scoring increment:
+```{.js .med-code code-line-numbers="|22"}
+function playGame() {
+    let car = document.querySelector(".car");
+    moveLines();
+    moveEnemy(car);
+    let road = gameArea.getBoundingClientRect();
+    if (player.start) {
+        if (keys.ArrowUp && player.y > road.top) {
+        player.y -= player.speed;
+        }
+        if (keys.ArrowDown && player.y < road.bottom) {
+        player.y += player.speed;
+        }
+        if (keys.ArrowLeft && player.x > 0) {
+        player.x -= player.speed;
+        }
+        if (keys.ArrowRight && player.x < road.width - 50) {
+        player.x += player.speed;
+        }
+        car.style.left = player.x + "px";
+        car.style.top = player.y + "px";
+        window.requestAnimationFrame(playGame);
+        player.score++;
+        score.innerText = "Score: " + player.score;
+    }
+}
+```
+
+---
+
+## Add Powerups
+
+
+::: {.callout-important}
+
+difficulty: Extreme!!!!!
+
+:::
+
+Powerup Styling:
+
+```{.css .tall-code}
+.powerup {
+    position: absolute;
+    bottom: 100px;
+    margin: auto;
+    width: 64px;
+    height: 64px;
+    background-color: white;
+    line-height: 38px;
+    font-size: 1.7em;
+    text-align: center;
+    vertical-align: middle;
+    background-image: url(powerup.png);
+    background-size: cover;
+}
+```
+
+---
+
+## Add Powerups
+
+Spawn new powerups!
+
+In the `start()` function:
+
+```{.js}
+for (let x = 0; x < 2; x++) {
+    let powerup = document.createElement("div");
+    powerup.classList.add("powerup");
+    // powerup.innerHTML = "<br>" + (x + 1);
+    powerup.y = (x + 1) * 600 * -1;
+    powerup.style.top = powerup.y + "px";
+    powerup.style.left = Math.floor(Math.random() * 350) + "px";
+    powerup.style.backgroundColor = randomColor();
+    gameArea.appendChild(powerup);
+}
+```
+
+## Add Powerups
+
+Below `moveEnemy()`:
+
+```{.js code-line-numbers="|7|14" .tall-code}
+function movePowerup(car) {
+    let ele = document.querySelectorAll(".powerup");
+    ele.forEach(function (item) {
+        if (isCollide(car, item)) {
+            console.log("POWERUP");
+            item.classList.add("hide")
+            gainPowerup();
+        }
+        if (item.y >= 1500) {
+            item.y = -1000;
+            item.style.left = Math.floor(Math.random() * 350) + "px";
+            item.style.backgroundColor = randomColor();
+        }
+        item.y += (player.speed/2);
+        item.style.top = item.y + "px";
+    });
+}
+```
+
+
+
+In the `playGame()` function:
+
+```{.js code-line-numbers="|5"}
+function playGame() {
+    let car = document.querySelector(".car");
+    moveLines();
+    moveEnemy(car);
+    movePowerup(car)
+```
+
+---
+
+
+
+
+## Add Powerups
+
+The Powerup Scripts:
+
+```{.js .tall-code}
+function gainPowerup(){
+    let powerOptions = [speedUp, slowDown]
+    let gotPower = Math.floor(Math.random() * powerOptions.length)
+    console.log("Got this powerup: " + powerOptions[gotPower].name)
+    setTimeout(powerOptions[gotPower].activate, 0);
+}
+
+let speedUp = {
+    "name" : "Speed Up",
+    "activate": () => {
+        console.log("SPEEEEEEED")
+    }
+}
+let slowDown = {
+    "name" : "Slow Down",
+    "activate": () => {
+        console.log("slooooooooooow")
+    }
+}
+```
 
 
 ---
 
-## Functionality Examples
+
+## Add Powerups
+
+Now, make those powerups do something!
+
+```{.js .tall-code code-line-numbers="|5,12"}
+let speedUp = {
+    "name" : "Speed Up",
+    "activate": () => {
+        console.log("SPEEEEEEED")
+        player.speed += 3
+    }
+}
+let slowDown = {
+    "name" : "Slow Down",
+    "activate": () => {
+        console.log("slooooooooooow")
+        player.speed -= 3
+    }
+}
+```
+
+## Add Powerups
+
+::: {.r-fit-text}
+The ultimate challenge:
+
+Can you make your own powerup??
+:::
