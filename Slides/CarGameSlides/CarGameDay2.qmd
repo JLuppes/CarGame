@@ -6,9 +6,9 @@ title: Car Game Day 2
 
 ## Our Project So Far
 
-Now we have a fully working game!
+Now we have a fully working game.
 
-![](./images/CompletedGame.png)
+![](./images/CompletedGame.png){height="100%"}
 
 . . .
 
@@ -18,14 +18,15 @@ Now we have a fully working game!
 
 ---
 
-## What's Happening Under the Hood
+## What's Happening Under the Hood {.smaller}
+
 
 An **HTML document**, containing embedded **JavaScript code** and **CSS styling** is rendered by a **web browser** to provide an interactive experience.
 
 ::::: {.fragment}
 
-### HTML
-**H**yper-**T**ext **M**arkup **L**anguage
+#### HTML - **H**yper-**T**ext **M**arkup **L**anguage
+
 Provides the **structure** of the page and most of the **content**.
 
 ::: {.callout-note .fragment}
@@ -38,14 +39,13 @@ Not actually a programming language!
 
 ::::: {.fragment}
 
-### CSS
+#### CSS - **Cascading Style Sheet**
 
-Cascading Style Sheet
 Provides rules to tell the browser how targets should be displayed.
 
 ::: {.callout-note .fragment}
 
-Not in its own sheet!
+Not always in its own sheet!
 
 :::
 
@@ -53,13 +53,13 @@ Not in its own sheet!
 
 ::::: {.fragment}
 
-### JavaScript
+#### JavaScript
 
 Scripting/Coding language executed in the brower, can affect and alter the page's DOM (Document Object Model).
 
 ::: {.callout-note .fragment}
 
-Not related to Java!
+Not really related to Java!
 
 :::
 
@@ -115,17 +115,6 @@ difficulty: Super Easy
 
 :::
 
-```{.css}
-.score {
-    background-color: black;
-    height: 70px;
-    text-align: center;
-    color: white;
-    font-size: 1.5em;
-    font-family: fantasy;
-}
-```
-
 
 ```{.css code-line-numbers="|2,5"}
 .score {
@@ -140,7 +129,7 @@ difficulty: Super Easy
 
 ---
 
-## Change the Car Image
+## Change the Car Image {.smaller}
 
 Find or make another picture to use for the cars!
 
@@ -245,7 +234,7 @@ This will require some serious CSS trickery!
 
 Consider checking out some CSS tricks:
 
-https://css-tricks.com/books/fundamental-css-tactics/infinite-scrolling-background-image/
+[https://css-tricks.com/books/fundamental-css-tactics/infinite-scrolling-background-image/](https://css-tricks.com/books/fundamental-css-tactics/infinite-scrolling-background-image/)
 
 Note: You will have to modify the instructions on that page quite a bit to make it work!
 
@@ -253,7 +242,7 @@ Note: You will have to modify the instructions on that page quite a bit to make 
 
 ## Scrolling Background Spoiler (1/2)
 
-```{.css .tall-code code-line-numbers="|0-4|6-7,13-14|17-19|21-28" code-fold="true" }
+```{.css .med-code code-line-numbers="" code-fold="true" }
 body{                                           /* <1> */
     background: url(grass.png) repeat-y;        /* <1> */
     animation: slide 6.5s linear infinite;      /* <1> */
@@ -300,15 +289,15 @@ Don't forget to add the scripting!
 ```
 
 
-```{.js code-line-numbers="|5-6"}
+```{.js code-line-numbers="|4-5"}
 function start() {
     startScreen.classList.add("hide");
-    //gameArea.classList.remove("hide");
     gameArea.innerHTML = "";
     body.classList.remove("pause")
     gameArea.classList.remove("pause")
     player.start = true;
     player.score = 0;
+}
 ```
 
 ```{.js code-line-numbers="|5-6"}
@@ -410,7 +399,8 @@ Spawn new powerups!
 In the `start()` function:
 
 ```{.js}
-for (let x = 0; x < 2; x++) {
+const numberOfPowerups = 2;
+for (let x = 0; x < numberOfPowerups; x++) {
     let powerup = document.createElement("div");
     powerup.classList.add("powerup");
     // powerup.innerHTML = "<br>" + (x + 1);
@@ -422,15 +412,15 @@ for (let x = 0; x < 2; x++) {
 }
 ```
 
-## Add Powerups
+## Add Powerups {.smaller}
 
 Below `moveEnemy()`:
 
-```{.js code-line-numbers="|7|14" .tall-code}
-function movePowerup(car) {
-    let ele = document.querySelectorAll(".powerup");
-    ele.forEach(function (item) {
-        if (isCollide(car, item)) {
+```{.js code-line-numbers="|7|14|7,14" .tall-code}
+function movePowerup() {
+    let listOfPowerups = document.querySelectorAll(".powerup");
+    listOfPowerups.forEach(function (item) {
+        if (isCollide(playerCar, item)) {
             console.log("POWERUP");
             item.classList.add("hide")
             gainPowerup();
@@ -446,15 +436,13 @@ function movePowerup(car) {
 }
 ```
 
-
-
-In the `playGame()` function:
+In the `mainGameLoop()` function:
 
 ```{.js code-line-numbers="|5"}
-function playGame() {
-    let car = document.querySelector(".car");
+function mainGameLoop() {
     moveLines();
-    moveEnemy(car);
+    moveEnemies();
+    respondToMovementKeys();
     movePowerup(car)
 ```
 
@@ -502,14 +490,14 @@ let speedUp = {
     "name" : "Speed Up",
     "activate": () => {
         console.log("SPEEEEEEED")
-        player.speed += 3
+        playerStatus.speed += 3
     }
 }
 let slowDown = {
     "name" : "Slow Down",
     "activate": () => {
         console.log("slooooooooooow")
-        player.speed -= 3
+        playerStatus.speed -= 3
     }
 }
 ```
@@ -521,3 +509,11 @@ The ultimate challenge:
 
 Can you make your own powerup??
 :::
+
+---
+
+## Showcase
+
+Work on adding either **style** or **functionality** (or both!).
+
+When you've got something to show, raise your hand and let us know!
