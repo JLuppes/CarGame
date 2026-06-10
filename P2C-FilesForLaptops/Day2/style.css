@@ -1,0 +1,76 @@
+/* The game title */
+.gameTitle {
+  color: dimgray;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-family: Impact;
+}
+/* The screen that shows before the game starts */
+.startScreen {
+  position: absolute;
+  background-color: red;
+  left: 25%;
+  top: 100px;
+  color: white;
+  z-index: 1;
+  text-align: center;
+  border: 1px solid red;
+  padding: 15px;
+  margin: auto;
+  width: 50%;
+  font-family: sans-serif;
+}
+/* The score board */
+.scoreBoard {
+  background-color: black;
+  height: 70px;
+  text-align: center;
+  color: white;
+  font-size: 1.5em;
+  font-family: fantasy;
+}
+/* Player car and enemies */
+.playerCar,
+.enemy {
+  /* Set the size of the cars */
+  width: 50px;
+  height: 100px;
+  /* Add a background image */
+  background-image: url(car.png);
+  background-size: cover;
+  /* Car positioning */
+  position: absolute;
+  bottom: 100px;
+  margin: auto;
+  /* Default background color of cars */
+  background-color: white;
+  /* Control how text on cars looks */
+  line-height: 38px;
+  font-size: 1.7em;
+  text-align: center;
+  vertical-align: middle;
+}
+/* The road area */
+.roadArea {
+  background-color: black;
+  width: 400px;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  margin: auto;
+}
+/* Road lines */
+.line {
+  /* Set position away from the left side */
+  margin-left: 195px;
+  position: absolute;
+  /* Set line appearance */
+  width: 10px;
+  height: 100px;
+  background-color: white;
+}
+/* This is a class we can put on things to hide them */
+.hide {
+  display: none;
+}

@@ -1,0 +1,26 @@
+/*
+################################################
+# STEP 4: Store references to game objects and status
+# Paste this code into the script.js file
+# Between STEP 4 (start) and STEP 4 (end)
+################################################
+*/
+
+// Create references to things we will work with in the script
+const scoreBoard = document.querySelector(".scoreBoard");
+const startScreen = document.querySelector(".startScreen");
+const roadArea = document.querySelector(".roadArea");
+const playerCar = document.querySelector(".playerCar");
+
+// Create "objects" which can hold information about things in our game
+let playerStatus = {
+  speed: 10,
+  score: 0,
+  gameActive: false,
+};
+let stateOfKeys = {
+  ArrowUp: false,
+  ArrowDown: false,
+  ArrowRight: false,
+  ArrowLeft: false,
+};

@@ -1,0 +1,13 @@
+/*
+################################################
+# STEP 5: Add event listeners
+# Paste this code into the script.js file
+# Between STEP 5 (start) and STEP 5 (end)
+################################################
+*/
+
+// Event listeners let the game hear about input events from the browser
+// Always two parts - what is the event, and what do we do when it happens
+startScreen.addEventListener("click", startNewGame);
+document.addEventListener("keydown", setKeyPressed);
+document.addEventListener("keyup", setKeyReleased);

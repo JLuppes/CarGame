@@ -1,0 +1,33 @@
+<!--    Car game, with embedded/internal CSS and JavaScript   -->
+<!-- This text is a "comment" - it doesn't affect the website at all, just provides some hints to the developers :) -->
+<html>
+  <!-- The head element holds information about the page -->
+  <head>
+    <title>Car Game</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <!-- The body of the page holds the structure of our game screen -->
+  <body>
+    <!-- Divs are containers that can hold content -->
+
+      <h1 class="gameTitle">Car Game</h1>
+    <div class="scoreBoard">
+    </div>
+
+
+    <!-- "class" is an attribute - it lets us "target" an element in styles and scripts -->
+    <div class="gameArea">
+      <div class="startScreen">
+        <!-- A "p" element is a paragraph - just some normal text -->
+        <p>Click here to start</p>
+        <p>Arrow keys move your car</p>
+        <p>If you hit another car you will lose</p>
+      </div>
+
+      <div class="roadArea">
+        <div class="playerCar"></div>
+      </div>
+    </div>
+  </body>
+</html>
