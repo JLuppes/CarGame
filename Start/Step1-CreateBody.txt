@@ -1,0 +1,27 @@
+<!--
+################################################
+# STEP 1: Create the HTML body
+# Paste this code into the index.html file between
+# STEP 1 (start) and STEP 1 (end)
+# Then Save the file, and open it in a web browser
+################################################
+-->
+
+    <!-- Divs are containers that can hold content -->
+    <div class="scoreBoard">
+      <h1 class="gameTitle">Car Game</h1>
+    </div>
+
+    <!-- "class" is an attribute - it lets us "target" an element in styles and scripts -->
+    <div class="gameArea">
+      <div class="startScreen">
+        <!-- A "p" element is a paragraph - just some normal text -->
+        <p>Click here to start</p>
+        <p>Arrow keys move your car</p>
+        <p>If you hit another car you will lose</p>
+      </div>
+
+      <div class="roadArea">
+        <div class="playerCar"></div>
+      </div>
+    </div>
