@@ -35,7 +35,7 @@ format:
     multiplex: true
 
     ## Presentation Dimensions
-    height: 100%
+    height: 960
     width: 960 # Optimized for side-by-side presentation at 1080p
     # width: 1920 # If you are going to present the slides full-screen
 

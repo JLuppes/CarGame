@@ -19,5 +19,5 @@ title-slide-attributes:
 fig-cap-location: top
 format:
   revealjs:
-    width: 130%
-    height: 1200
+    width: 960
+    height: 1000
