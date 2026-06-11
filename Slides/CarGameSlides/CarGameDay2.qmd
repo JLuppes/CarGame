@@ -117,7 +117,7 @@ difficulty: Super Easy
 
 
 ```{.css code-line-numbers="|2,5"}
-.score {
+.scoreBoard {
     background-color: green;
     height: 70px;
     text-align: center;
@@ -214,7 +214,9 @@ Save the images into the project folder, and then you will need to figure out ho
 ### Hint
 
 ```css
-background-image: url(grass.png);
+body {
+  background-image: url(grass.png);
+}
 ```
 
 ---
@@ -242,27 +244,10 @@ Note: You will have to modify the instructions on that page quite a bit to make 
 
 ## Scrolling Background Spoiler (1/2)
 
-```{.css .med-code code-line-numbers="" code-fold="true" }
-body{                                           /* <1> */
-    background: url(grass.png) repeat-y;        /* <1> */
-    animation: slide 6.5s linear infinite;      /* <1> */
-}                                               /* <1> */
+Add the animation definition
 
-.gameArea {                                     /* <2> */
-    /* background-color: black; */
-    width: 400px;
-    height: 100%;
-    overflow: hidden;
-    position: relative;
-    margin: auto;
-    background: url("road.png") repeat-y;       /* <2> */
-    animation: slide 1.5s linear infinite;      /* <2> */
-}
-
-.pause{                                         /* <3> */
-    animation-play-state: paused;               /* <3> */
-}                                               /* <3> */
-
+`Add to the end of style.css`
+```{.css}
 @keyframes slide {                              /* <4> */
     0% {                                        /* <4> */
         background-position: 0 0;               /* <4> */
@@ -271,11 +256,42 @@ body{                                           /* <1> */
         background-position: 0 1024px;          /* <4> */
     }                                           /* <4> */
 }                                               /* <4> */
+
 ```
-1. Add background and animation to body
-2. Add background and animation to game area
-3. Add pause class (to pause animations)
-4. Add animation definition
+Add the scrolling animation to the page body
+
+`Update the existing body section of style.css`
+```{.css .med-code code-line-numbers="|3" code-fold="true" }
+body{
+    background: url(grass.png) ;
+    animation: slide 6.5s linear infinite;
+}
+```
+
+Update the road area with a new background
+
+`Update the existing .roadArea in style.css`
+```{.css code-line-numbers="true"}
+.roadArea {                                     /* <2> */
+    /* background-color: black; */
+    width: 400px;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    margin: auto;
+    background: url("road.png") repeat;       /* <2> */
+    animation: slide 1.5s linear infinite;      /* <2> */
+}
+```
+
+Add the 'pause' helper class
+`Add to the end of style.css`
+```{.css code-line-numbers="true"}
+.pause{                                         /* <3> */
+    animation-play-state: paused;               /* <3> */
+}                                               /* <3> */
+```
+
 
 
 ---
@@ -285,28 +301,29 @@ body{                                           /* <1> */
 Don't forget to add the scripting!
 
 ```{.html}
-<div class="gameArea pause">
+<div class="roadArea pause">
 ```
 
 
-```{.js code-line-numbers="|4-5"}
-function start() {
-    startScreen.classList.add("hide");
-    gameArea.innerHTML = "";
+```{.js code-line-numbers="|2-3"}
+function startNewGame() {
     body.classList.remove("pause")
-    gameArea.classList.remove("pause")
-    player.start = true;
-    player.score = 0;
+    roadArea.classList.remove("pause")
+  // Remove the start screen by adding "hide" class
+  startScreen.classList.add("hide");
+
+  // Clear out any stuff left on the road
+  roadArea.innerHTML = "";
 }
 ```
 
-```{.js code-line-numbers="|5-6"}
+```{.js code-line-numbers="|2-3"}
 function endGame() {
-    player.start = false;
-    score.innerHTML = "Game Over<br>Score was " + player.score;
-    startScreen.classList.remove("hide");
     body.classList.add("pause")
-    gameArea.classList.add("pause")
+    roadArea.classList.add("pause")
+    playerStatus.gameActive = false;
+    scoreBoard.innerHTML = "Game Over<br>Final Score: " + playerStatus.score + "\nFinal Speed: " + playerStatus.speed;
+    startScreen.classList.remove("hide");
 }
 ```
 
@@ -321,49 +338,26 @@ difficulty: Easy
 
 :::
 
-Update the starting score, speed, or scoring increment.
+Update the starting speed or scoring increment.
 
-Speed and starting score:
+Update speed:
 ```{.js code-line-numbers="|2-3"}
-let player = {
-    speed: 10,
-    score: 0,
+let playerStatus = {
+  speed: 10,
+  score: 0,
+  gameActive: false,
 };
 ```
 
 Update scoring increment:
 ```{.js .med-code code-line-numbers=""}
-function mainGameLoop() {
-  moveLines();
-  moveEnemies();
-  movePowerup()
-  respondToMovementKeys();
-  // If the game is still active, run the game loop again
-  if (playerStatus.gameActive) {
-    window.requestAnimationFrame(mainGameLoop);
-  }
+function addScore() {
+  playerStatus.score += 1;
+  scoreBoard.innerText =
+    "Score: " + playerStatus.score + "\nSpeed: " + playerStatus.speed;
 }
 ```
 
-```{.js code-line-numbers="14"}
-function moveEnemies() {
-  let car = document.querySelector(".playerCar");
-  let ele = document.querySelectorAll(".enemy");
-  ele.forEach(function (item) {
-    if (checkCollision(car, item)) {
-      console.log("HIT");
-      endGame();
-    }
-    if (item.y >= 1500) {
-      item.y = -600;
-      item.style.left = Math.floor(Math.random() * 350) + "px";
-      item.style.backgroundColor = getRandomColor();
-    }
-    item.y += 1;
-    item.style.top = item.y + "px";
-  });
-}
-```
 
 ---
 
@@ -376,24 +370,7 @@ difficulty: Extreme!!!!!
 
 :::
 
-Powerup Styling:
 
-```{.css .tall-code}
-.powerup {
-    position: absolute;
-    bottom: 100px;
-    margin: auto;
-    width: 64px;
-    height: 64px;
-    background-color: white;
-    line-height: 38px;
-    font-size: 1.7em;
-    text-align: center;
-    vertical-align: middle;
-    background-image: url(powerup.png);
-    background-size: cover;
-}
-```
 
 ---
 
@@ -445,40 +422,62 @@ In the `mainGameLoop()` function:
 
 ```{.js code-line-numbers="|5"}
 function mainGameLoop() {
+    addScore();
     moveLines();
     moveEnemies();
-    respondToMovementKeys();
     movePowerup(car)
+    respondToMovementKeys();
+    loopGame();
+}
 ```
 
 ---
 
+Powerup Styling:
 
+```{.css .tall-code}
+.powerup {
+    position: absolute;
+    bottom: 100px;
+    margin: auto;
+    width: 64px;
+    height: 64px;
+    background-color: white;
+    line-height: 38px;
+    font-size: 1.7em;
+    text-align: center;
+    vertical-align: middle;
+    background-image: url(powerup.png);
+    background-size: cover;
+}
+```
 
+---
 
 ## Add Powerups
 
 The Powerup Scripts:
 
 ```{.js .tall-code}
-function gainPowerup(){
-    let powerOptions = [speedUp, slowDown]
-    let gotPower = Math.floor(Math.random() * powerOptions.length)
-    console.log("Got this powerup: " + powerOptions[gotPower].name)
-    setTimeout(powerOptions[gotPower].activate, 0);
-}
+function gainPowerup() {
+  let powerOptions = [
+    {
+      name: "Speed Up",
+      activate: () => {
+        console.log("SPEEEEEEED");
+      },
+    },
+    {
+      name: "Slow Down",
+      activate: () => {
+        console.log("slooooooooooow");
+      },
+    },
+  ];
 
-let speedUp = {
-    "name" : "Speed Up",
-    "activate": () => {
-        console.log("SPEEEEEEED")
-    }
-}
-let slowDown = {
-    "name" : "Slow Down",
-    "activate": () => {
-        console.log("slooooooooooow")
-    }
+  let gotPower = Math.floor(Math.random() * powerOptions.length);
+  console.log("Got this powerup: " + powerOptions[gotPower].name);
+  setTimeout(powerOptions[gotPower].activate, 0);
 }
 ```
 
@@ -491,20 +490,20 @@ let slowDown = {
 Now, make those powerups do something!
 
 ```{.js .tall-code code-line-numbers="|5,12"}
-let speedUp = {
-    "name" : "Speed Up",
-    "activate": () => {
-        console.log("SPEEEEEEED")
-        playerStatus.speed += 3
-    }
-}
-let slowDown = {
-    "name" : "Slow Down",
-    "activate": () => {
-        console.log("slooooooooooow")
-        playerStatus.speed -= 3
-    }
-}
+    {
+      name: "Speed Up",
+      activate: () => {
+        console.log("SPEEEEEEED");
+        playerStatus.speed += 10;
+      },
+    },
+    {
+      name: "Slow Down",
+      activate: () => {
+        console.log("slooooooooooow");
+        playerStatus.speed += -10;
+      },
+    },
 ```
 
 ## Add Powerups
@@ -514,6 +513,7 @@ The ultimate challenge:
 
 Can you make your own powerup??
 :::
+
 
 ---
 

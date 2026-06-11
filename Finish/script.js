@@ -3,6 +3,7 @@ const scoreBoard = document.querySelector(".scoreBoard");
 const startScreen = document.querySelector(".startScreen");
 const roadArea = document.querySelector(".roadArea");
 const playerCar = document.querySelector(".playerCar");
+const body = document.querySelector("body");
 
 // Create "objects" which can hold information about things in our game
 let playerStatus = {
@@ -26,36 +27,47 @@ document.addEventListener("keyup", setKeyReleased);
 // Now we define some functions, which are re-usable blocks of code
 // Functions should always do exactly what their name says they will do!
 
+// This function runs once for every frame of the game
+function mainGameLoop() {
+  addScore();
+  moveLines();
+  moveEnemies();
+  respondToMovementKeys();
+  loopGame();
+}
+
 function startNewGame() {
   // Remove the start screen by adding "hide" class
   startScreen.classList.add("hide");
 
+  setUpRoad();
+  setUpPlayer();
+  mainGameLoop();
+}
+
+function setUpRoad() {
   // Clear out any stuff left on the road
   roadArea.innerHTML = "";
 
+  // Create some road lines and enemies
+  createRoadLines(10);
+  createEnemies(3);
+}
+function setUpPlayer() {
   // Set player status to initial state
   playerStatus.gameActive = true;
   playerStatus.score = 0;
-
-  // Loop (repeat) this block of code to make road lines
-  const numberOfRoadLines = 10;
-  for (let x = 0; x < numberOfRoadLines; x++) {
-    let div = document.createElement("div");
-    div.classList.add("line");
-    div.y = x * 150;
-    div.style.top = x * 150 + "px";
-    roadArea.appendChild(div);
-  }
-
-  // Put the player car on the road
-  roadArea.appendChild(playerCar);
 
   // Set player position
   playerStatus.x = playerCar.offsetLeft;
   playerStatus.y = playerCar.offsetTop;
 
+  // Put the player car on the road
+  roadArea.appendChild(playerCar);
+}
+
+function createEnemies(numberOfEnemies) {
   // Loop (repeat) this block of code to make enemies
-  const numberOfEnemies = 3;
   for (let x = 0; x < numberOfEnemies; x++) {
     let enemy = document.createElement("div");
     enemy.classList.add("enemy");
@@ -66,9 +78,17 @@ function startNewGame() {
     enemy.style.backgroundColor = getRandomColor();
     roadArea.appendChild(enemy);
   }
+}
 
-  // Start the main game loop
-  window.requestAnimationFrame(mainGameLoop);
+function createRoadLines(numberOfRoadLines) {
+  // Loop (repeat) this block of code to make road lines
+  for (let x = 0; x < numberOfRoadLines; x++) {
+    let div = document.createElement("div");
+    div.classList.add("line");
+    div.y = x * 150;
+    div.style.top = x * 150 + "px";
+    roadArea.appendChild(div);
+  }
 }
 
 function setKeyPressed(e) {
@@ -83,12 +103,7 @@ function setKeyReleased(e) {
   console.log(stateOfKeys);
 }
 
-// This function runs once for every frame of the game
-function mainGameLoop() {
-  moveLines();
-  moveEnemies();
-  respondToMovementKeys();
-
+function loopGame() {
   // If the game is still active, run the game loop again
   if (playerStatus.gameActive) {
     window.requestAnimationFrame(mainGameLoop);
@@ -129,10 +144,13 @@ function respondToMovementKeys() {
     // Move the player's car graphic to their new position
     playerCar.style.left = playerStatus.x + "px";
     playerCar.style.top = playerStatus.y + "px";
-
-    playerStatus.score++;
-    scoreBoard.innerText = "Score: " + playerStatus.score;
   }
+}
+
+function addScore() {
+  playerStatus.score += 1;
+  scoreBoard.innerText =
+    "Score: " + playerStatus.score + "\nSpeed: " + playerStatus.speed;
 }
 
 function moveLines() {
@@ -185,6 +203,10 @@ function checkCollision(firstItem, secondItem) {
 
 function endGame() {
   playerStatus.gameActive = false;
-  scoreBoard.innerHTML = "Game Over<br>Score was " + playerStatus.score;
+  scoreBoard.innerHTML =
+    "Game Over<br>Final Score: " +
+    playerStatus.score +
+    "\nFinal Speed: " +
+    playerStatus.speed;
   startScreen.classList.remove("hide");
 }
