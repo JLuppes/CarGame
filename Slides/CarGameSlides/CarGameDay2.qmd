@@ -332,31 +332,36 @@ let player = {
 ```
 
 Update scoring increment:
-```{.js .med-code code-line-numbers="|22"}
-function playGame() {
-    let car = document.querySelector(".car");
-    moveLines();
-    moveEnemy(car);
-    let road = gameArea.getBoundingClientRect();
-    if (player.start) {
-        if (keys.ArrowUp && player.y > road.top) {
-        player.y -= player.speed;
-        }
-        if (keys.ArrowDown && player.y < road.bottom) {
-        player.y += player.speed;
-        }
-        if (keys.ArrowLeft && player.x > 0) {
-        player.x -= player.speed;
-        }
-        if (keys.ArrowRight && player.x < road.width - 50) {
-        player.x += player.speed;
-        }
-        car.style.left = player.x + "px";
-        car.style.top = player.y + "px";
-        window.requestAnimationFrame(playGame);
-        player.score++;
-        score.innerText = "Score: " + player.score;
+```{.js .med-code code-line-numbers=""}
+function mainGameLoop() {
+  moveLines();
+  moveEnemies();
+  movePowerup()
+  respondToMovementKeys();
+  // If the game is still active, run the game loop again
+  if (playerStatus.gameActive) {
+    window.requestAnimationFrame(mainGameLoop);
+  }
+}
+```
+
+```{.js code-line-numbers="14"}
+function moveEnemies() {
+  let car = document.querySelector(".playerCar");
+  let ele = document.querySelectorAll(".enemy");
+  ele.forEach(function (item) {
+    if (checkCollision(car, item)) {
+      console.log("HIT");
+      endGame();
     }
+    if (item.y >= 1500) {
+      item.y = -600;
+      item.style.left = Math.floor(Math.random() * 350) + "px";
+      item.style.backgroundColor = getRandomColor();
+    }
+    item.y += 1;
+    item.style.top = item.y + "px";
+  });
 }
 ```
 
@@ -396,31 +401,31 @@ Powerup Styling:
 
 Spawn new powerups!
 
-In the `start()` function:
+In the `startNewGame()` function:
 
 ```{.js}
-const numberOfPowerups = 2;
-for (let x = 0; x < numberOfPowerups; x++) {
-    let powerup = document.createElement("div");
-    powerup.classList.add("powerup");
-    // powerup.innerHTML = "<br>" + (x + 1);
-    powerup.y = (x + 1) * 600 * -1;
-    powerup.style.top = powerup.y + "px";
-    powerup.style.left = Math.floor(Math.random() * 350) + "px";
-    powerup.style.backgroundColor = randomColor();
-    gameArea.appendChild(powerup);
-}
+  const numberOfPowerups = 2;
+  for (let x = 0; x < numberOfPowerups; x++) {
+      let powerup = document.createElement("div");
+      powerup.classList.add("powerup");
+      // powerup.innerHTML = "<br>" + (x + 1);
+      powerup.y = (x + 1) * 600 * -1;
+      powerup.style.top = powerup.y + "px";
+      powerup.style.left = Math.floor(Math.random() * 350) + "px";
+      // powerup.style.backgroundColor = randomColor();
+      roadArea.appendChild(powerup);
+  }
 ```
 
 ## Add Powerups {.smaller}
 
 Below `moveEnemy()`:
 
-```{.js code-line-numbers="|7|14|7,14" .tall-code}
+```{.js code-line-numbers="" .tall-code}
 function movePowerup() {
     let listOfPowerups = document.querySelectorAll(".powerup");
     listOfPowerups.forEach(function (item) {
-        if (isCollide(playerCar, item)) {
+        if (checkCollision(playerCar, item)) {
             console.log("POWERUP");
             item.classList.add("hide")
             gainPowerup();
@@ -428,9 +433,9 @@ function movePowerup() {
         if (item.y >= 1500) {
             item.y = -1000;
             item.style.left = Math.floor(Math.random() * 350) + "px";
-            item.style.backgroundColor = randomColor();
+            item.style.backgroundColor = getRandomColor();
         }
-        item.y += (player.speed/2);
+        item.y += (playerStatus.speed/2);
         item.style.top = item.y + "px";
     });
 }
