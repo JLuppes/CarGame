@@ -1,0 +1,87 @@
+/*
+################################################
+# STEP 9: Add the game logic functions
+# Paste this code into the script.js file
+# Between STEP 9 (start) and STEP 9 (end)
+################################################
+*/
+
+/* COPY+PASTE EVERYTHING BELOW THIS */
+
+///////////////////////////////
+//// GAME LOGIC SECTION
+///////////////////////////////
+
+function addScore() {
+  playerStatus.score += playerStatus.speed / 10;
+  playerStatus.score = roundNumber(playerStatus.score);
+  scoreBoard.innerText =
+    "Score: " + playerStatus.score + "\nSpeed: " + playerStatus.speed;
+}
+
+function roundNumber(num) {
+  return Math.round(num * 10) / 10;
+}
+
+function moveLines() {
+  let lines = document.querySelectorAll(".line");
+  lines.forEach(function (line) {
+    if (line.y >= 1500) {
+      line.y -= 1500;
+    }
+    line.y += playerStatus.speed;
+    line.style.top = line.y + "px";
+  });
+}
+
+function moveEnemies() {
+  let enemies = document.querySelectorAll(".enemy");
+  enemies.forEach(function (enemyCar) {
+    if (checkCollision(playerCar, enemyCar)) {
+      console.log("PLAYER CRASHED");
+      endGame();
+    }
+    if (enemyCar.y >= 1500) {
+      roadAreaBoundaries = roadArea.getBoundingClientRect();
+      enemyCarBoundaries = enemyCar.getBoundingClientRect();
+      enemyCar.y = -1 * window.innerHeight;
+      console.log(roadArea.style.width);
+      enemyCar.style.left =
+        Math.floor(
+          Math.random() * (roadAreaBoundaries.width - enemyCarBoundaries.width),
+        ) + "px";
+      enemyCar.style.backgroundColor = getRandomColor();
+    }
+    enemyCar.y += playerStatus.speed;
+    enemyCar.style.top = enemyCar.y + "px";
+  });
+}
+
+function getRandomColor() {
+  function c() {
+    let hex = Math.floor(Math.random() * 256).toString(16);
+    return ("0" + String(hex)).substr(-2);
+  }
+  return "#" + c() + c() + c();
+}
+
+function checkCollision(firstItem, secondItem) {
+  let firstRect = firstItem.getBoundingClientRect();
+  let secondRect = secondItem.getBoundingClientRect();
+  return !(
+    firstRect.bottom < secondRect.top ||
+    firstRect.top > secondRect.bottom ||
+    firstRect.right < secondRect.left ||
+    firstRect.left > secondRect.right
+  );
+}
+
+function endGame() {
+  playerStatus.gameActive = false;
+  scoreBoard.innerHTML =
+    "Game Over<br>Final Score: " +
+    playerStatus.score +
+    "\nFinal Speed: " +
+    playerStatus.speed;
+  startScreen.classList.remove("hide");
+}

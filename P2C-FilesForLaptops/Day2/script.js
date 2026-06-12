@@ -1,3 +1,7 @@
+///////////////////////////////
+//// OBJECT REFERENCE SECTION
+///////////////////////////////
+
 // Create references to things we will work with in the script
 const scoreBoard = document.querySelector(".scoreBoard");
 const startScreen = document.querySelector(".startScreen");
@@ -18,14 +22,30 @@ let stateOfKeys = {
   ArrowLeft: false,
 };
 
+///////////////////////////////
+//// EVENT LISTENERS SECTION
+///////////////////////////////
+
 // Event listeners let the game hear about input events from the browser
 // Always two parts - what is the event, and what do we do when it happens
 startScreen.addEventListener("click", startNewGame);
 document.addEventListener("keydown", setKeyPressed);
 document.addEventListener("keyup", setKeyReleased);
 
+///////////////////////////////
+//// GAME LOOP SECTION
+///////////////////////////////
+
 // Now we define some functions, which are re-usable blocks of code
 // Functions should always do exactly what their name says they will do!
+
+function startNewGame() {
+  // Remove the start screen by adding "hide" class
+  startScreen.classList.add("hide");
+  setUpRoad();
+  setUpPlayer();
+  mainGameLoop();
+}
 
 // This function runs once for every frame of the game
 function mainGameLoop() {
@@ -36,14 +56,16 @@ function mainGameLoop() {
   loopGame();
 }
 
-function startNewGame() {
-  // Remove the start screen by adding "hide" class
-  startScreen.classList.add("hide");
-
-  setUpRoad();
-  setUpPlayer();
-  mainGameLoop();
+function loopGame() {
+  // If the game is still active, run the game loop again
+  if (playerStatus.gameActive) {
+    window.requestAnimationFrame(mainGameLoop);
+  }
 }
+
+///////////////////////////////
+//// SETUP SECTION
+///////////////////////////////
 
 function setUpRoad() {
   // Clear out any stuff left on the road
@@ -53,6 +75,7 @@ function setUpRoad() {
   createRoadLines(10);
   createEnemies(3);
 }
+
 function setUpPlayer() {
   // Set player status to initial state
   playerStatus.gameActive = true;
@@ -66,30 +89,43 @@ function setUpPlayer() {
   roadArea.appendChild(playerCar);
 }
 
-function createEnemies(numberOfEnemies) {
-  // Loop (repeat) this block of code to make enemies
-  for (let x = 0; x < numberOfEnemies; x++) {
-    let enemy = document.createElement("div");
-    enemy.classList.add("enemy");
-    enemy.innerHTML = "<br>" + (x + 1);
-    enemy.y = (x + 1) * 600 * -1;
-    enemy.style.top = enemy.y + "px";
-    enemy.style.left = Math.floor(Math.random() * 350) + "px";
-    enemy.style.backgroundColor = getRandomColor();
-    roadArea.appendChild(enemy);
+function createRoadLines(numberOfRoadLines) {
+  const roadAreaBoundaries = roadArea.getBoundingClientRect();
+  // Loop (repeat) this block of code to make road lines
+  for (let x = 0; x < numberOfRoadLines; x++) {
+    const newRoadLine = document.createElement("div");
+    newRoadLine.classList.add("line");
+    newRoadLineBoundaries = newRoadLine.getBoundingClientRect();
+    newRoadLine.style.marginLeft =
+      (roadAreaBoundaries.width - newRoadLineBoundaries.width) / 2;
+    newRoadLine.y = x * 150;
+    newRoadLine.style.top = x * 150 + "px";
+    roadArea.appendChild(newRoadLine);
   }
 }
 
-function createRoadLines(numberOfRoadLines) {
-  // Loop (repeat) this block of code to make road lines
-  for (let x = 0; x < numberOfRoadLines; x++) {
-    let div = document.createElement("div");
-    div.classList.add("line");
-    div.y = x * 150;
-    div.style.top = x * 150 + "px";
-    roadArea.appendChild(div);
+function createEnemies(numberOfEnemies) {
+  roadAreaBoundaries = roadArea.getBoundingClientRect();
+  // Loop (repeat) this block of code to make enemies
+  for (let x = 0; x < numberOfEnemies; x++) {
+    let newEnemy = document.createElement("div");
+    newEnemy.classList.add("enemy");
+    newEnemyBoundaries = newEnemy.getBoundingClientRect();
+    newEnemy.innerHTML = "<br>" + (x + 1);
+    newEnemy.y = (x + 3) * 600 * -1;
+    newEnemy.style.top = newEnemy.y + "px";
+    newEnemy.style.left =
+      Math.floor(
+        Math.random() * (roadAreaBoundaries.width - newEnemyBoundaries.width),
+      ) + "px";
+    newEnemy.style.backgroundColor = getRandomColor();
+    roadArea.appendChild(newEnemy);
   }
 }
+
+///////////////////////////////
+//// PLAYER INPUT SECTION
+///////////////////////////////
 
 function setKeyPressed(e) {
   e.preventDefault();
@@ -101,13 +137,6 @@ function setKeyReleased(e) {
   e.preventDefault();
   stateOfKeys[e.key] = false;
   console.log(stateOfKeys);
-}
-
-function loopGame() {
-  // If the game is still active, run the game loop again
-  if (playerStatus.gameActive) {
-    window.requestAnimationFrame(mainGameLoop);
-  }
 }
 
 function respondToMovementKeys() {
@@ -147,38 +176,52 @@ function respondToMovementKeys() {
   }
 }
 
+///////////////////////////////
+//// GAME LOGIC SECTION
+///////////////////////////////
+
 function addScore() {
-  playerStatus.score += 1;
+  playerStatus.score += playerStatus.speed / 10;
+  playerStatus.score = roundNumber(playerStatus.score);
   scoreBoard.innerText =
     "Score: " + playerStatus.score + "\nSpeed: " + playerStatus.speed;
 }
 
+function roundNumber(num) {
+  return Math.round(num * 10) / 10;
+}
+
 function moveLines() {
   let lines = document.querySelectorAll(".line");
-  lines.forEach(function (item) {
-    if (item.y >= 1500) {
-      item.y -= 1500;
+  lines.forEach(function (line) {
+    if (line.y >= 1500) {
+      line.y -= 1500;
     }
-    item.y += playerStatus.speed;
-    item.style.top = item.y + "px";
+    line.y += playerStatus.speed;
+    line.style.top = line.y + "px";
   });
 }
 
 function moveEnemies() {
-  let car = document.querySelector(".playerCar");
-  let ele = document.querySelectorAll(".enemy");
-  ele.forEach(function (item) {
-    if (checkCollision(car, item)) {
-      console.log("HIT");
+  let enemies = document.querySelectorAll(".enemy");
+  enemies.forEach(function (enemyCar) {
+    if (checkCollision(playerCar, enemyCar)) {
+      console.log("PLAYER CRASHED");
       endGame();
     }
-    if (item.y >= 1500) {
-      item.y = -600;
-      item.style.left = Math.floor(Math.random() * 350) + "px";
-      item.style.backgroundColor = getRandomColor();
+    if (enemyCar.y >= 1500) {
+      roadAreaBoundaries = roadArea.getBoundingClientRect();
+      enemyCarBoundaries = enemyCar.getBoundingClientRect();
+      enemyCar.y = -1 * window.innerHeight;
+      console.log(roadArea.style.width);
+      enemyCar.style.left =
+        Math.floor(
+          Math.random() * (roadAreaBoundaries.width - enemyCarBoundaries.width),
+        ) + "px";
+      enemyCar.style.backgroundColor = getRandomColor();
     }
-    item.y += playerStatus.speed;
-    item.style.top = item.y + "px";
+    enemyCar.y += playerStatus.speed;
+    enemyCar.style.top = enemyCar.y + "px";
   });
 }
 

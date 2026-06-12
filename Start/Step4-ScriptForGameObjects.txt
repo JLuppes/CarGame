@@ -1,16 +1,23 @@
 /*
 ################################################
-# STEP 4: Store references to game objects and status
+# STEP 4: Store references to game objects
 # Paste this code into the script.js file
 # Between STEP 4 (start) and STEP 4 (end)
 ################################################
 */
+
+/* COPY+PASTE EVERYTHING BELOW THIS */
+
+///////////////////////////////
+//// OBJECT REFERENCE SECTION
+///////////////////////////////
 
 // Create references to things we will work with in the script
 const scoreBoard = document.querySelector(".scoreBoard");
 const startScreen = document.querySelector(".startScreen");
 const roadArea = document.querySelector(".roadArea");
 const playerCar = document.querySelector(".playerCar");
+const body = document.querySelector("body");
 
 // Create "objects" which can hold information about things in our game
 let playerStatus = {

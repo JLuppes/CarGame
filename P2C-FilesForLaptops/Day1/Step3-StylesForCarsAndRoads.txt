@@ -6,6 +6,7 @@
 ################################################
 */
 
+/* COPY+PASTE EVERYTHING BELOW THIS */
 
 /* Player car and enemies */
 .playerCar,
@@ -40,14 +41,18 @@
 /* Road lines */
 .line {
   /* Set position away from the left side */
-  margin-left: 195px;
+  /* margin-left: 195px; */
   position: absolute;
   /* Set line appearance */
   width: 10px;
   height: 100px;
   background-color: white;
 }
-/* This is a class we can put on things to hide them */
+/* This is a helper class we can put on things to hide them */
 .hide {
   display: none;
+}
+/* This is a helper class we can put on things to pause animations */
+.pause {
+  animation-play-state: paused;
 }

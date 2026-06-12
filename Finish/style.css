@@ -1,34 +1,45 @@
 /* The game title */
 .gameTitle {
   color: dimgray;
-  margin: 0;
-  padding: 0;
+  margin: 1px auto;
+  padding: 2px;
   text-align: center;
   font-family: Impact;
+  border: 2px dashed black;
+  width: fit-content;
+  left: auto;
+  position: absolute;
 }
 /* The screen that shows before the game starts */
 .startScreen {
   position: absolute;
   background-color: red;
-  left: 25%;
-  top: 100px;
+  left: 35%;
+  top: 15em;
   color: white;
   z-index: 1;
   text-align: center;
   border: 1px solid red;
   padding: 15px;
   margin: auto;
-  width: 50%;
+  width: 30%;
   font-family: sans-serif;
 }
 /* The score board */
 .scoreBoard {
-  background-color: black;
+  background-color: maroon;
   height: 70px;
+  line-height: 35px;
+  left: 30%;
+  width: 40%;
+  position: absolute;
+  z-index: 2;
+  margin: auto;
   text-align: center;
   color: white;
   font-size: 1.5em;
   font-family: fantasy;
+  border: 2px double black;
 }
 /* Player car and enemies */
 .playerCar,
@@ -63,7 +74,7 @@
 /* Road lines */
 .line {
   /* Set position away from the left side */
-  margin-left: 195px;
+  /* margin-left: 195px; */
   position: absolute;
   /* Set line appearance */
   width: 10px;
@@ -73,4 +84,8 @@
 /* This is a class we can put on things to hide them */
 .hide {
   display: none;
+}
+
+.pause {
+  animation-play-state: paused;
 }

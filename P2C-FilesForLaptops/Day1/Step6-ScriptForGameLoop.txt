@@ -1,0 +1,40 @@
+/*
+################################################
+# STEP 6: Add the game loop
+# Paste this code into the script.js file
+# Between STEP 6 (start) and STEP 6 (end)
+################################################
+*/
+
+/* COPY+PASTE EVERYTHING BELOW THIS */
+
+///////////////////////////////
+//// GAME LOOP SECTION
+///////////////////////////////
+
+// Now we define some functions, which are re-usable blocks of code
+// Functions should always do exactly what their name says they will do!
+
+function startNewGame() {
+  // Remove the start screen by adding "hide" class
+  startScreen.classList.add("hide");
+  setUpRoad();
+  setUpPlayer();
+  mainGameLoop();
+}
+
+// This function runs once for every frame of the game
+function mainGameLoop() {
+  addScore();
+  moveLines();
+  moveEnemies();
+  respondToMovementKeys();
+  loopGame();
+}
+
+function loopGame() {
+  // If the game is still active, run the game loop again
+  if (playerStatus.gameActive) {
+    window.requestAnimationFrame(mainGameLoop);
+  }
+}

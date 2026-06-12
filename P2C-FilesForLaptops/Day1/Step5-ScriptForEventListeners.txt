@@ -1,10 +1,16 @@
 /*
 ################################################
-# STEP 5: Add event listeners
+# STEP 5: Set up event listeners
 # Paste this code into the script.js file
 # Between STEP 5 (start) and STEP 5 (end)
 ################################################
 */
+
+/* COPY+PASTE EVERYTHING BELOW THIS */
+
+///////////////////////////////
+//// EVENT LISTENERS SECTION
+///////////////////////////////
 
 // Event listeners let the game hear about input events from the browser
 // Always two parts - what is the event, and what do we do when it happens

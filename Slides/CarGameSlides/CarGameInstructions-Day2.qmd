@@ -1,0 +1,502 @@
+---
+title: Car Game Day 2
+---
+
+# Recap
+
+## Our Project So Far
+
+Now we have a fully working game.
+
+![](./images/CompletedGame.png){height="100%"}
+
+. . .
+
+<br><br>
+
+### What's your high score so far (no modifications)?
+
+---
+
+## What's Happening Under the Hood {.smaller}
+
+
+An **HTML document**, containing embedded **JavaScript code** and **CSS styling** is rendered by a **web browser** to provide an interactive experience.
+
+::::: {.fragment}
+
+#### HTML - **H**yper-**T**ext **M**arkup **L**anguage
+
+Provides the **structure** of the page and most of the **content**.
+
+::: {.callout-note .fragment}
+
+Not actually a programming language!
+
+:::
+
+:::::
+
+::::: {.fragment}
+
+#### CSS - **Cascading Style Sheet**
+
+Provides rules to tell the browser how targets should be displayed.
+
+::: {.callout-note .fragment}
+
+Not always in its own sheet!
+
+:::
+
+:::::
+
+::::: {.fragment}
+
+#### JavaScript
+
+Scripting/Coding language executed in the brower, can affect and alter the page's DOM (Document Object Model).
+
+::: {.callout-note .fragment}
+
+Not really related to Java!
+
+:::
+
+:::::
+
+# What Now?
+
+## Make it Your Own
+
+All of the code that you pasted in to the `HTML` file - you can modify that!
+
+You can change small things like the speed, starting score, or color values.
+
+Or you can change the functionality, game-over conditions, controls - anything you want!
+
+---
+
+## Today - Two Paths
+
+We are going to focus on two tracks today.
+
+
+::: {.fragment}
+
+### 1. Style
+
+Update the game to look better/different/unique.
+
+You can change the colors, change the images, add backgrounds, gradients, animations, etc.
+
+:::
+
+
+::: {.fragment}
+
+### 2. Functionality (Features)
+
+Change the functionality of the game to add some kind of new feature.
+
+You could change the number of enemies, change how many times you need to crash before losing, or change the system for scoring.
+
+Or, just see how high you can get the score!
+
+:::
+
+# Style Examples
+
+## Change Existing Colors
+
+::: {.callout-important}
+
+difficulty: Super Easy
+
+:::
+
+
+```{.css code-line-numbers="|2,5"  filename="style.css"}
+.scoreBoard {
+    background-color: green;
+    height: 70px;
+    text-align: center;
+    color: red;
+    font-size: 1.5em;
+    font-family: fantasy;
+}
+```
+
+---
+
+## Change the Car Image
+
+Find or make another picture to use for the cars!
+
+### Option 1: Find an Existing Image
+
+
+::: {.callout-important}
+
+difficulty: Easy
+
+:::
+
+Search for an image in a similar orientation to our example.
+
+Try to narrow down your search with relevant keywords, like "top-down" and "transparent".
+
+Save an image into the project folder. If asked to replace the file, you can say yes.
+
+
+---
+
+## Change the Car Image
+
+Find or make another picture to use for the cars!
+
+
+### Option 2: Make Your Own Car!
+
+
+::: {.callout-important}
+
+difficulty: Medium
+
+:::
+
+Open up `Paint` and make a new file with similar dimensions (`77x154`) and draw up a new car look.
+
+### Add Transparency
+
+Save your car image as a `.png` file.
+
+Now, select and delete or erase the background.
+
+Remember, the cars have random colors by default, which will show through anywhere there is no background.
+
+Follow the steps from the last section to add your image to the game!
+
+---
+
+## Add Some Backgrounds
+
+::: {.callout-important}
+
+difficulty: difficult
+
+:::
+
+Find or make a background image for part of the game.
+
+Consider:
+
+- The road
+- The area outside of the road (grass? desert? city?)
+- Road lines
+- High Score display
+- Start Button display
+
+Save the images into the project folder, and then you will need to figure out how to get them into the game using our CSS code.
+
+Some images are included in the project folder, feel free to use those!
+
+### Hint
+
+```{.css  filename="style.css"}
+.roadArea {
+  background-image: url(road.png);
+}
+```
+
+```{.css  filename="style.css"}
+body {
+  background-image: url(grass.png);
+}
+```
+
+---
+
+## Make Those Backgrounds Scroll
+
+
+::: {.callout-important}
+
+difficulty: Expert!!!
+
+:::
+
+Static backgrounds improve the look a lot, but for a racing game, it would be a lot better if they would scroll.
+
+This will require some serious CSS trickery!
+
+Consider checking out some CSS tricks:
+
+[https://css-tricks.com/books/fundamental-css-tactics/infinite-scrolling-background-image/](https://css-tricks.com/books/fundamental-css-tactics/infinite-scrolling-background-image/)
+
+Note: You will have to modify the instructions on that page quite a bit to make it work!
+
+---
+
+## Scrolling Background Spoiler (1/2)
+
+Add the animation definition
+
+```{.css filename="style.css"}
+@keyframes slide {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 0 1024px;
+    }
+}
+
+```
+Add the scrolling animation to the page body
+
+```{.css .med-code code-line-numbers="|3" code-fold="true" filename="style.css" }
+body{
+    background: url(grass.png) ;
+    animation: slide 6.5s linear infinite;
+}
+```
+
+Update the road area with a new background
+
+```{.css code-line-numbers="true" filename="style.css"}
+.roadArea {                                     /* <2> */
+    /* background-color: black; */
+    width: 400px;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    margin: auto;
+    background: url("road.png") repeat;       /* <2> */
+    animation: slide 1.5s linear infinite;      /* <2> */
+}
+```
+
+---
+
+## Scrolling Background (2/2)
+
+Don't forget to add the scripting!
+
+```{.js code-line-numbers="|2-3" filename="script.js"}
+function startNewGame() {
+  body.classList.remove("pause")
+  roadArea.classList.remove("pause")
+
+  // Remove the start screen by adding "hide" class
+  startScreen.classList.add("hide");
+
+  // Clear out any stuff left on the road
+  roadArea.innerHTML = "";
+}
+```
+
+```{.js code-line-numbers="|2-3" filename="script.js"}
+function endGame() {
+    body.classList.add("pause")
+    roadArea.classList.add("pause")
+
+    playerStatus.gameActive = false;
+    scoreBoard.innerHTML = "Game Over<br>Final Score: " + playerStatus.score + "\nFinal Speed: " + playerStatus.speed;
+    startScreen.classList.remove("hide");
+}
+```
+
+# Functionality Examples
+
+## Change the Numbers
+
+
+::: {.callout-important}
+
+difficulty: Easy
+
+:::
+
+Update the starting speed or scoring increment.
+
+Update speed:
+```{.js code-line-numbers="|2-3" filename="script.js"}
+let playerStatus = {
+  speed: 10,
+  score: 0,
+  gameActive: false,
+};
+```
+
+Update scoring increment:
+```{.js .med-code code-line-numbers="" filename="script.js"}
+function addScore() {
+  playerStatus.score += 1;
+  scoreBoard.innerText =
+    "Score: " + playerStatus.score + "\nSpeed: " + playerStatus.speed;
+}
+```
+
+---
+
+## Add Powerups
+
+::: {.callout-important}
+
+difficulty: Extreme!!!!!
+
+:::
+
+
+---
+
+## Add Powerups
+
+Spawn new powerups!
+
+In the `startNewGame()` function:
+
+```{.js filename="script.js"}
+  const numberOfPowerups = 2;
+  for (let x = 0; x < numberOfPowerups; x++) {
+      let powerup = document.createElement("div");
+      powerup.classList.add("powerup");
+      // powerup.innerHTML = "<br>" + (x + 1);
+      powerup.y = (x + 1) * 600 * -1;
+      powerup.style.top = powerup.y + "px";
+      powerup.style.left = Math.floor(Math.random() * 350) + "px";
+      // powerup.style.backgroundColor = randomColor();
+      roadArea.appendChild(powerup);
+  }
+```
+
+## Add Powerups {.smaller}
+
+Below `moveEnemy()`:
+
+```{.js code-line-numbers="" .tall-code filename="script.js"}
+function movePowerup() {
+    let listOfPowerups = document.querySelectorAll(".powerup");
+    listOfPowerups.forEach(function (item) {
+        if (checkCollision(playerCar, item)) {
+            console.log("POWERUP");
+            item.classList.add("hide");
+            gainPowerup();
+        }
+        if (item.y >= 1500) {
+            item.y = -1000;
+            item.style.left = Math.floor(Math.random() * 350) + "px";
+            item.style.backgroundColor = getRandomColor();
+            item.classList.remove("hide");
+        }
+        item.y += (playerStatus.speed/2);
+        item.style.top = item.y + "px";
+    });
+}
+```
+
+In the `mainGameLoop()` function:
+
+```{.js code-line-numbers="|5" filename="script.js"}
+function mainGameLoop() {
+    addScore();
+    moveLines();
+    moveEnemies();
+    movePowerup()
+    respondToMovementKeys();
+    loopGame();
+}
+```
+
+---
+
+Powerup Styling:
+
+```{.css .tall-code filename="style.css"}
+.powerup {
+    position: absolute;
+    bottom: 100px;
+    margin: auto;
+    width: 64px;
+    height: 64px;
+    background-color: white;
+    line-height: 38px;
+    font-size: 1.7em;
+    text-align: center;
+    vertical-align: middle;
+    background-image: url(powerup.png);
+    background-size: cover;
+}
+```
+
+---
+
+## Add Powerups
+
+The Powerup Scripts:
+
+```{.js .tall-code filename="script.js"}
+function gainPowerup() {
+  let powerOptions = [
+    {
+      name: "Speed Up",
+      activate: () => {
+        console.log("SPEEEEEEED");
+      },
+    },
+    {
+      name: "Slow Down",
+      activate: () => {
+        console.log("slooooooooooow");
+      },
+    },
+  ];
+
+  let gotPower = Math.floor(Math.random() * powerOptions.length);
+  console.log("Got this powerup: " + powerOptions[gotPower].name);
+  setTimeout(powerOptions[gotPower].activate, 0);
+}
+```
+
+
+---
+
+
+## Add Powerups
+
+Now, make those powerups do something!
+
+```{.js .tall-code code-line-numbers="|5,12" filename="script.js"}
+    {
+      name: "Speed Up",
+      activate: () => {
+        console.log("SPEEEEEEED");
+        playerStatus.speed += 10;
+      },
+    },
+    {
+      name: "Slow Down",
+      activate: () => {
+        console.log("slooooooooooow");
+        playerStatus.speed += -10;
+      },
+    },
+```
+
+## Add Powerups
+
+::: {.r-fit-text}
+The ultimate challenge:
+
+Can you make your own powerup??
+:::
+
+
+---
+
+## Showcase
+
+Work on adding either **style** or **functionality** (or both!).
+
+When you've got something to show, raise your hand and let us know!

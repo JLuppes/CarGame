@@ -1,0 +1,63 @@
+
+/*
+################################################
+# STEP 8: Add the player input functions
+# Paste this code into the script.js file
+# Between STEP 8 (start) and STEP 8 (end)
+################################################
+*/
+
+/* COPY+PASTE EVERYTHING BELOW THIS */
+
+///////////////////////////////
+//// PLAYER INPUT SECTION
+///////////////////////////////
+
+function setKeyPressed(e) {
+  e.preventDefault();
+  stateOfKeys[e.key] = true;
+  console.log(stateOfKeys);
+}
+
+function setKeyReleased(e) {
+  e.preventDefault();
+  stateOfKeys[e.key] = false;
+  console.log(stateOfKeys);
+}
+
+function respondToMovementKeys() {
+  // Get a rectangle that represents the edges of the road
+  let roadBoundaries = roadArea.getBoundingClientRect();
+
+  // Check if the game has started
+  if (playerStatus.gameActive) {
+    // Check if the player is not at the top edge of the road boundaries
+    const canMoveUp = playerStatus.y > roadBoundaries.top;
+
+    // Only move the player if the key is pressed and they are allowed to move
+    if (stateOfKeys.ArrowUp && canMoveUp) {
+      // Since the player is pressing up and they are allowed to move, change their position!
+      playerStatus.y -= playerStatus.speed;
+    }
+
+    // Do the same for each of the other keys
+    const canMoveDown = playerStatus.y < roadBoundaries.bottom;
+    if (stateOfKeys.ArrowDown && canMoveDown) {
+      playerStatus.y += playerStatus.speed;
+    }
+
+    const canMoveLeft = playerStatus.x > 0;
+    if (stateOfKeys.ArrowLeft && canMoveLeft) {
+      playerStatus.x -= playerStatus.speed;
+    }
+
+    const canMoveRight = playerStatus.x < roadBoundaries.width - 50;
+    if (stateOfKeys.ArrowRight && canMoveRight) {
+      playerStatus.x += playerStatus.speed;
+    }
+
+    // Move the player's car graphic to their new position
+    playerCar.style.left = playerStatus.x + "px";
+    playerCar.style.top = playerStatus.y + "px";
+  }
+}

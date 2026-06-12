@@ -1,0 +1,70 @@
+
+/*
+################################################
+# STEP 7: Add some functions set up the game area
+# Paste this code into the script.js file
+# Between STEP 7 (start) and STEP 7 (end)
+################################################
+*/
+
+/* COPY+PASTE EVERYTHING BELOW THIS */
+
+///////////////////////////////
+//// SETUP SECTION
+///////////////////////////////
+
+function setUpRoad() {
+  // Clear out any stuff left on the road
+  roadArea.innerHTML = "";
+
+  // Create some road lines and enemies
+  createRoadLines(10);
+  createEnemies(3);
+}
+
+function setUpPlayer() {
+  // Set player status to initial state
+  playerStatus.gameActive = true;
+  playerStatus.score = 0;
+
+  // Set player position
+  playerStatus.x = playerCar.offsetLeft;
+  playerStatus.y = playerCar.offsetTop;
+
+  // Put the player car on the road
+  roadArea.appendChild(playerCar);
+}
+
+function createRoadLines(numberOfRoadLines) {
+  const roadAreaBoundaries = roadArea.getBoundingClientRect();
+  // Loop (repeat) this block of code to make road lines
+  for (let x = 0; x < numberOfRoadLines; x++) {
+    const newRoadLine = document.createElement("div");
+    newRoadLine.classList.add("line");
+    newRoadLineBoundaries = newRoadLine.getBoundingClientRect();
+    newRoadLine.style.marginLeft =
+      (roadAreaBoundaries.width - newRoadLineBoundaries.width) / 2;
+    newRoadLine.y = x * 150;
+    newRoadLine.style.top = x * 150 + "px";
+    roadArea.appendChild(newRoadLine);
+  }
+}
+
+function createEnemies(numberOfEnemies) {
+  roadAreaBoundaries = roadArea.getBoundingClientRect();
+  // Loop (repeat) this block of code to make enemies
+  for (let x = 0; x < numberOfEnemies; x++) {
+    let newEnemy = document.createElement("div");
+    newEnemy.classList.add("enemy");
+    newEnemyBoundaries = newEnemy.getBoundingClientRect();
+    newEnemy.innerHTML = "<br>" + (x + 1);
+    newEnemy.y = (x + 3) * 600 * -1;
+    newEnemy.style.top = newEnemy.y + "px";
+    newEnemy.style.left =
+      Math.floor(
+        Math.random() * (roadAreaBoundaries.width - newEnemyBoundaries.width),
+      ) + "px";
+    newEnemy.style.backgroundColor = getRandomColor();
+    roadArea.appendChild(newEnemy);
+  }
+}

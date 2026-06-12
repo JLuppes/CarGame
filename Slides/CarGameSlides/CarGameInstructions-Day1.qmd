@@ -1,0 +1,730 @@
+---
+title: "Game Design"
+author:
+    - Amalan Pulendran
+    - Sharon Jirak
+    - Joshua Luppes
+---
+
+## HTML, CSS, & JavaScript: The Web Trio
+
+### HTML (Structure)
+
+- The structure of a webpage – organizing content so browsers and screen readers understand what is on the page.
+- The minimum necessary for webpage to exist
+
+### CSS (Style)
+
+- The design and layout (colors, fonts, spacing, alignments, etc.).
+- Optional, but looks a lot better with
+
+### Javascript (Action)
+
+- Adds interactivity (retrieve/send input, make decisions, add action, etc).
+- Without it, webpage is static
+
+---
+
+## What we'll do:
+
+1. Build the basic page structure.
+2. Add styling to make the page and contents look different.
+3. Add interactive JavaScript code to capture user inputs and respond with game updates.
+
+---
+
+## Start the Project
+
+1. Open the zip file named "P2C-FilesForLaptops.zip".
+2. Copy the folder named "Day 1" onto your desktop.
+3. Change the name of that folder to "YourName - Day 1". This will be your `project folder` for the day.
+4. Right-click on the folder, and find "Open With Code".
+    - If this isn't listed, you'll need to open `Visual Studio Code`, then select File -> Open Folder, and then navigate to your project folder.
+
+
+---
+
+## Step 1 - Add the Page Body
+
+::: {.callout-note}
+
+Open up `index.html` in your editor.
+
+Find the lines that say:
+
+```{.html}
+    <!-- STEP 1 (start) -->
+
+    <!-- STEP 1 (end) -->
+```
+
+Open the Step 1 text file, and copy it into the file between those two lines.
+
+:::
+
+
+---
+
+## Step 1 - Explained
+
+We've added a bunch of `elements` to the `body` of our index page.
+
+- Each `element` consists of an openening tag, a closing tag, and possibly a value (between the tags).
+
+- Tags are surround by `angle brackets` (greater-than and less-than signs).
+
+- Opening tags start with the name of the type of element, and sometimes have `attributes` which can change their behavior, or identify them so we can change their behavior with other code (like CSS or JavaScript).
+
+```{.html code-line-numbers="true"}
+    <!-- Divs are containers that can hold content -->
+
+    <h1 class="gameTitle">Car Game</h1>
+    <div class="scoreBoard"></div>
+
+    <!-- "class" is an attribute - it lets us "target" an element in styles and scripts -->
+    <div class="gameArea">
+      <div class="startScreen">
+        <!-- A "p" element is a paragraph - just some normal text -->
+        <p>Click here to start</p>
+        <p>Arrow keys move your car</p>
+        <p>If you hit another car you will lose</p>
+      </div>
+
+      <div class="roadArea pause">
+        <div class="playerCar"></div>
+      </div>
+    </div>
+```
+
+---
+
+## Step 2 - Add Styles for Title and Start
+
+::: {.callout-note}
+
+Open up `style.css` in your editor.
+
+Find the lines that say:
+
+```{.css}
+/* STEP 2 (start) */
+
+/* STEP 2 (end) */
+```
+
+Open the Step 2 text file, and copy it into the file between those two lines.
+
+:::
+
+---
+
+## Step 2 - Explained
+
+We've added `styles` to our `stylesheet`.
+
+- These styles have `selectors` which control what element is targeted.
+
+- Selectors are followed by a set of "curly brackets" (`{` and `}`) which mark the start and end of the styles applied to the selected items.
+
+- Inside the brackets are `attributes`, which change the way the items are displayed.
+
+```{.css}
+/* The game title */
+.gameTitle {
+  color: dimgray;
+  margin: 1px auto;
+  padding: 2px;
+  text-align: center;
+  font-family: Impact;
+  border: 2px dashed black;
+  width: fit-content;
+  left: auto;
+  position: absolute;
+}
+/* The screen that shows before the game starts */
+.startScreen {
+  position: absolute;
+  background-color: red;
+  left: 35%;
+  top: 15em;
+  color: white;
+  z-index: 1;
+  text-align: center;
+  border: 1px solid red;
+  padding: 15px;
+  margin: auto;
+  width: 30%;
+  font-family: sans-serif;
+}
+/* The score board */
+.scoreBoard {
+  background-color: maroon;
+  height: 70px;
+  line-height: 35px;
+  left: 30%;
+  width: 40%;
+  position: absolute;
+  z-index: 2;
+  margin: auto;
+  text-align: center;
+  color: white;
+  font-size: 1.5em;
+  font-family: fantasy;
+  border: 2px double black;
+}
+```
+
+
+---
+
+## Step 3 - Add Styles for Cars and Roads
+
+::: {.callout-note}
+
+Open up `style.css` in your editor.
+
+Find the lines that say:
+
+```{.css}
+/* STEP 3 (start) */
+
+/* STEP 3 (end) */
+```
+
+Open the Step 3 text file, and copy it into the file between those two lines.
+
+:::
+
+
+---
+
+## Step 3 - Explained
+
+We've added some more styles.
+
+- The first selectors are for player and enemy cars.
+- Next are for the road area and lines.
+- Then we add some "helper" classes to let us easily toggle some behaviors.
+
+
+```{.css}
+/* Player car and enemies */
+.playerCar,
+.enemy {
+  /* Set the size of the cars */
+  width: 50px;
+  height: 100px;
+  /* Add a background image */
+  background-image: url(car.png);
+  background-size: cover;
+  /* Car positioning */
+  position: absolute;
+  bottom: 100px;
+  margin: auto;
+  /* Default background color of cars */
+  background-color: white;
+  /* Control how text on cars looks */
+  line-height: 38px;
+  font-size: 1.7em;
+  text-align: center;
+  vertical-align: middle;
+}
+/* The road area */
+.roadArea {
+  background-color: black;
+  width: 400px;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  margin: auto;
+}
+/* Road lines */
+.line {
+  /* Set position away from the left side */
+  /* margin-left: 195px; */
+  position: absolute;
+  /* Set line appearance */
+  width: 10px;
+  height: 100px;
+  background-color: white;
+}
+/* This is a helper class we can put on things to hide them */
+.hide {
+  display: none;
+}
+/* This is a helper class we can put on things to pause animations */
+.pause {
+  animation-play-state: paused;
+}
+```
+
+---
+
+## Step 4 - Add Scripting for Game Objects
+
+::: {.callout-note}
+
+Open up `script.js` in your editor.
+
+Find the lines that say:
+
+```{.js}
+//////// STEP 4 (start)
+
+
+//////// STEP 4 (end)
+```
+
+Open the Step 4 text file, and copy it into the file between those two lines.
+
+:::
+
+---
+
+## Step 4 - Explained
+
+This code doesn't really make anything happen yet, it just sets up some `references` that we can use in the rest of our code.
+
+- References are stored in `variables`, which we will use throughout our code to point to specific things.
+- The first chunk are parts of the `DOM` (Document Object Model), which are things that exist as part of the HTML page.
+- The second chunk are `objects` that store information about the player's status in the game, as well as the state of which keys are being pressed.
+
+
+```{.js}
+///////////////////////////////
+//// OBJECT REFERENCE SECTION
+///////////////////////////////
+
+// Create references to things we will work with in the script
+const scoreBoard = document.querySelector(".scoreBoard");
+const startScreen = document.querySelector(".startScreen");
+const roadArea = document.querySelector(".roadArea");
+const playerCar = document.querySelector(".playerCar");
+const body = document.querySelector("body");
+
+// Create "objects" which can hold information about things in our game
+let playerStatus = {
+  speed: 10,
+  score: 0,
+  gameActive: false,
+};
+let stateOfKeys = {
+  ArrowUp: false,
+  ArrowDown: false,
+  ArrowRight: false,
+  ArrowLeft: false,
+};
+```
+
+---
+
+## Step 5 - Add Scripting for Game Objects
+
+::: {.callout-note}
+
+Open up `script.js` in your editor.
+
+Find the lines that say:
+
+```{.js}
+//////// STEP 5 (start)
+
+
+//////// STEP 5 (end)
+```
+
+Open the Step 5 text file, and copy it into the file between those two lines.
+
+:::
+
+## Step 5 - Explained
+
+We are adding some `event listeners`, which will give our script information about things that happen to the page.
+
+- Each event listener needs two `parameters` - what event do I listen for, and what do I do when it happens?
+
+- The first event is for the start screen - it listens for a "click" event, and when that happens, it `invokes` (activates) the `startNewGame` function.
+
+- The next two listen for "keydown" and "keyup" events - basically any time a keyboard key is pressed or released. When that happens, we activate functions that handle the response for us.
+
+
+```{.js}
+///////////////////////////////
+//// EVENT LISTENERS SECTION
+///////////////////////////////
+
+// Event listeners let the game hear about input events from the browser
+// Always two parts - what is the event, and what do we do when it happens
+startScreen.addEventListener("click", startNewGame);
+document.addEventListener("keydown", setKeyPressed);
+document.addEventListener("keyup", setKeyReleased);
+```
+
+---
+
+## Step 6 - Add Scripting for Game Objects
+
+::: {.callout-note}
+
+Open up `script.js` in your editor.
+
+Find the lines that say:
+
+```{.js}
+//////// STEP 6 (start)
+
+
+//////// STEP 6 (end)
+```
+
+Open the Step 6 text file, and copy it into the file between those two lines.
+
+:::
+
+## Step 6 - Explained
+
+We have added our game loop - these are the parts of the code that will run over and over to keep the game happening for as long as the user wants to keep playing.
+
+- There are three main `functions` at play here, which are re-usable blocks of code that we can call back to any time we need to use its functionality.
+- These functions call other functions in turn - letting us keep the logical flow of the code (relatively) easy to understand.
+
+```{.js}
+///////////////////////////////
+//// GAME LOOP SECTION
+///////////////////////////////
+
+// Now we define some functions, which are re-usable blocks of code
+// Functions should always do exactly what their name says they will do!
+
+function startNewGame() {
+  // Remove the start screen by adding "hide" class
+  startScreen.classList.add("hide");
+  setUpRoad();
+  setUpPlayer();
+  mainGameLoop();
+}
+
+// This function runs once for every frame of the game
+function mainGameLoop() {
+  addScore();
+  moveLines();
+  moveEnemies();
+  respondToMovementKeys();
+  loopGame();
+}
+
+function loopGame() {
+  // If the game is still active, run the game loop again
+  if (playerStatus.gameActive) {
+    window.requestAnimationFrame(mainGameLoop);
+  }
+}
+```
+
+---
+
+## Step 7 - Add Scripting for Game Objects
+
+::: {.callout-note}
+
+Open up `script.js` in your editor.
+
+Find the lines that say:
+
+```{.js}
+//////// STEP 7 (start)
+
+
+//////// STEP 7 (end)
+```
+
+Open the Step 7 text file, and copy it into the file between those two lines.
+
+:::
+
+---
+
+## Step 7 - Explained
+
+We have added some code to set up our game area.
+
+- `setUpRoad()` clears the road out, puts down some lines, and makes some new enemies appear.
+- `setUpPlayer()` starts the game, sets the score to 0, and puts the player into the starting position.
+- `createRoadLines()` and `createEnemies()` are the functions that `setUpRoad()` calls to - they handle all the complicated logic of getting everything on the screen and deciding how many and where they go.
+
+
+```{.js}
+///////////////////////////////
+//// SETUP SECTION
+///////////////////////////////
+
+function setUpRoad() {
+  // Clear out any stuff left on the road
+  roadArea.innerHTML = "";
+
+  // Create some road lines and enemies
+  createRoadLines(10);
+  createEnemies(3);
+}
+
+function setUpPlayer() {
+  // Set player status to initial state
+  playerStatus.gameActive = true;
+  playerStatus.score = 0;
+
+  // Set player position
+  playerStatus.x = playerCar.offsetLeft;
+  playerStatus.y = playerCar.offsetTop;
+
+  // Put the player car on the road
+  roadArea.appendChild(playerCar);
+}
+
+function createRoadLines(numberOfRoadLines) {
+  const roadAreaBoundaries = roadArea.getBoundingClientRect();
+  // Loop (repeat) this block of code to make road lines
+  for (let x = 0; x < numberOfRoadLines; x++) {
+    const newRoadLine = document.createElement("div");
+    newRoadLine.classList.add("line");
+    newRoadLineBoundaries = newRoadLine.getBoundingClientRect();
+    newRoadLine.style.marginLeft =
+      (roadAreaBoundaries.width - newRoadLineBoundaries.width) / 2;
+    newRoadLine.y = x * 150;
+    newRoadLine.style.top = x * 150 + "px";
+    roadArea.appendChild(newRoadLine);
+  }
+}
+
+function createEnemies(numberOfEnemies) {
+  roadAreaBoundaries = roadArea.getBoundingClientRect();
+  // Loop (repeat) this block of code to make enemies
+  for (let x = 0; x < numberOfEnemies; x++) {
+    let newEnemy = document.createElement("div");
+    newEnemy.classList.add("enemy");
+    newEnemyBoundaries = newEnemy.getBoundingClientRect();
+    newEnemy.innerHTML = "<br>" + (x + 1);
+    newEnemy.y = (x + 3) * 600 * -1;
+    newEnemy.style.top = newEnemy.y + "px";
+    newEnemy.style.left =
+      Math.floor(
+        Math.random() * (roadAreaBoundaries.width - newEnemyBoundaries.width),
+      ) + "px";
+    newEnemy.style.backgroundColor = getRandomColor();
+    roadArea.appendChild(newEnemy);
+  }
+}
+```
+
+---
+
+## Step 8 - Add Scripting for Game Objects
+
+::: {.callout-note}
+
+Open up `script.js` in your editor.
+
+Find the lines that say:
+
+```{.js}
+//////// STEP 8 (start)
+
+
+//////// STEP 8 (end)
+```
+
+Open the Step 8 text file, and copy it into the file between those two lines.
+
+:::
+
+---
+
+## Step 8 - Explained {.smaller}
+
+Here we handle game inputs - when a key is pressed, what should we do?
+
+- `setKeyPressed(e)` and `setKeyReleased(e)` update our `stateOfKeys` object so that we know which keys are currently being pressed.
+- `respondToMovementKeys()` uses some `conditional logic` to decide what to do based on the keys that are being pressed.
+  - For each key, we check two things - is the key being pressed, and is the player able to move in that direction?
+  - If both are true, we can move the player in the right direction based on their speed.
+  - If not, we skip that part and move on to the next key.
+  - Finally, we update the player's position on the screen.
+
+```{.js}
+///////////////////////////////
+//// PLAYER INPUT SECTION
+///////////////////////////////
+
+function setKeyPressed(e) {
+  e.preventDefault();
+  stateOfKeys[e.key] = true;
+  console.log(stateOfKeys);
+}
+
+function setKeyReleased(e) {
+  e.preventDefault();
+  stateOfKeys[e.key] = false;
+  console.log(stateOfKeys);
+}
+
+function respondToMovementKeys() {
+  // Get a rectangle that represents the edges of the road
+  let roadBoundaries = roadArea.getBoundingClientRect();
+
+  // Check if the game has started
+  if (playerStatus.gameActive) {
+    // Check if the player is not at the top edge of the road boundaries
+    const canMoveUp = playerStatus.y > roadBoundaries.top;
+
+    // Only move the player if the key is pressed and they are allowed to move
+    if (stateOfKeys.ArrowUp && canMoveUp) {
+      // Since the player is pressing up and they are allowed to move, change their position!
+      playerStatus.y -= playerStatus.speed;
+    }
+
+    // Do the same for each of the other keys
+    const canMoveDown = playerStatus.y < roadBoundaries.bottom;
+    if (stateOfKeys.ArrowDown && canMoveDown) {
+      playerStatus.y += playerStatus.speed;
+    }
+
+    const canMoveLeft = playerStatus.x > 0;
+    if (stateOfKeys.ArrowLeft && canMoveLeft) {
+      playerStatus.x -= playerStatus.speed;
+    }
+
+    const canMoveRight = playerStatus.x < roadBoundaries.width - 50;
+    if (stateOfKeys.ArrowRight && canMoveRight) {
+      playerStatus.x += playerStatus.speed;
+    }
+
+    // Move the player's car graphic to their new position
+    playerCar.style.left = playerStatus.x + "px";
+    playerCar.style.top = playerStatus.y + "px";
+  }
+}
+```
+
+---
+
+## Step 9 - Add Scripting for Game Logic
+
+::: {.callout-note}
+
+Open up `script.js` in your editor.
+
+Find the lines that say:
+
+```{.js}
+//////// STEP 9 (start)
+
+
+//////// STEP 9 (end)
+```
+
+Open the Step 9 text file, and copy it into the file between those two lines.
+
+:::
+
+---
+
+## Step 9 - Explained {.smaller}
+
+Now we handle some of the game logic.
+
+- `addScore()` gets activated for every frame of the game. It adds some amount to the player score, and then updates the score board with the new information.
+- `moveLines()` and `moveEnemies()` figure out where those should move to, and then if they are past the end of the screen, it moves them back up to the top to make it look like a continuous stream of lines and enemies keeps coming.
+- `checkCollision(firstItem, secondItem)` takes two objects as `parameters` and checks to see if they have run into each other.
+  - It starts by making a rectangle around each object.
+  - Then, it does some comparisons to see if those rectangles are overlapping. If so, they've collided!
+- Finally, `endGame()` takes care of things that need to happen once the player has crashed into an enemy.
+  - `playerStatus` is updated to say the game is no longer active
+  - The score board is updated with our "game over" message
+  - The "start game" screen is displayed back to the user so they can start again
+
+```{.js}
+///////////////////////////////
+//// GAME LOGIC SECTION
+///////////////////////////////
+
+function addScore() {
+  playerStatus.score += playerStatus.speed / 10;
+  playerStatus.score = roundNumber(playerStatus.score);
+  scoreBoard.innerText =
+    "Score: " + playerStatus.score + "\nSpeed: " + playerStatus.speed;
+}
+
+function roundNumber(num) {
+  return Math.round(num * 10) / 10;
+}
+
+function moveLines() {
+  let lines = document.querySelectorAll(".line");
+  lines.forEach(function (line) {
+    if (line.y >= 1500) {
+      line.y -= 1500;
+    }
+    line.y += playerStatus.speed;
+    line.style.top = line.y + "px";
+  });
+}
+
+function moveEnemies() {
+  let enemies = document.querySelectorAll(".enemy");
+  enemies.forEach(function (enemyCar) {
+    if (checkCollision(playerCar, enemyCar)) {
+      console.log("PLAYER CRASHED");
+      endGame();
+    }
+    if (enemyCar.y >= 1500) {
+      roadAreaBoundaries = roadArea.getBoundingClientRect();
+      enemyCarBoundaries = enemyCar.getBoundingClientRect();
+      enemyCar.y = -1 * window.innerHeight;
+      console.log(roadArea.style.width);
+      enemyCar.style.left =
+        Math.floor(
+          Math.random() * (roadAreaBoundaries.width - enemyCarBoundaries.width),
+        ) + "px";
+      enemyCar.style.backgroundColor = getRandomColor();
+    }
+    enemyCar.y += playerStatus.speed;
+    enemyCar.style.top = enemyCar.y + "px";
+  });
+}
+
+function getRandomColor() {
+  function c() {
+    let hex = Math.floor(Math.random() * 256).toString(16);
+    return ("0" + String(hex)).substr(-2);
+  }
+  return "#" + c() + c() + c();
+}
+
+function checkCollision(firstItem, secondItem) {
+  let firstRect = firstItem.getBoundingClientRect();
+  let secondRect = secondItem.getBoundingClientRect();
+  return !(
+    firstRect.bottom < secondRect.top ||
+    firstRect.top > secondRect.bottom ||
+    firstRect.right < secondRect.left ||
+    firstRect.left > secondRect.right
+  );
+}
+
+function endGame() {
+  playerStatus.gameActive = false;
+  scoreBoard.innerHTML =
+    "Game Over<br>Final Score: " +
+    playerStatus.score +
+    "\nFinal Speed: " +
+    playerStatus.speed;
+  startScreen.classList.remove("hide");
+}
+```
+---
+
+## That's It!
+
+You now have a fully functional game running in your web browser.
+
+- What's your high score without changing the code?
+- What's your high score if you *can* modify the code?

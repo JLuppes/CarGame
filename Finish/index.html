@@ -8,13 +8,11 @@
     <script src="script.js" defer></script>
   </head>
   <!-- The body of the page holds the structure of our game screen -->
-  <body>
+  <body class="pause">
     <!-- Divs are containers that can hold content -->
 
-      <h1 class="gameTitle">Car Game</h1>
-    <div class="scoreBoard">
-    </div>
-
+    <h1 class="gameTitle">Car Game</h1>
+    <div class="scoreBoard"></div>
 
     <!-- "class" is an attribute - it lets us "target" an element in styles and scripts -->
     <div class="gameArea">
@@ -25,7 +23,7 @@
         <p>If you hit another car you will lose</p>
       </div>
 
-      <div class="roadArea">
+      <div class="roadArea pause">
         <div class="playerCar"></div>
       </div>
     </div>
