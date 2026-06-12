@@ -10,9 +10,9 @@ You can download the repo and modify the files to make the game your own!
 
 ## The Slides
 
-[Day 1 Slides](https://jluppes.github.io/CarGame/Slides/docs/CarGameSlides/CarGame.html)
+[Day 1 Slides](https://jluppes.github.io/CarGame/Slides/docs/CarGameSlides/CarGameInstructions-Day1.html)
 
-[Day 2 Slides](https://jluppes.github.io/CarGame/Slides/docs/CarGameSlides/CarGameDay2.html)
+[Day 2 Slides](https://jluppes.github.io/CarGame/Slides/docs/CarGameSlides/CarGameInstructions-Day2.html)
 
 ## The Game
 
